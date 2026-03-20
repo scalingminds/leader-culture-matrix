@@ -263,7 +263,10 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
 .qb-bar{height:4px;background:var(--cream-light);border-radius:2px;overflow:hidden;}
 .qb-fill{height:100%;background:var(--green);border-radius:2px;}
 
-/* ── FOOT ── */
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:0.84rem;font-weight:600;font-family:'Inter',sans-serif;opacity:0;transition:opacity 0.25s,transform 0.25s;z-index:999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.toast.error{background:#7a1a1a;}
 .foot{text-align:center;font-size:0.71rem;color:var(--text-muted);padding:24px 40px;margin-top:4px;border-top:1px solid var(--border);}
 
 /* ── RESPONSIVE ── */
@@ -444,6 +447,9 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
   <div class="detail-card" id="detail-inner"></div>
 </div>
 
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
 <script>
 // ── FIREBASE ──────────────────────────────────────────────────────────────────
 firebase.initializeApp({
@@ -455,6 +461,14 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const db   = firebase.firestore();
 let currentUser=null, team=[], docRef=null;
+
+function showToast(msg, type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast'+(type?' '+type:'');
+  requestAnimationFrame(()=>{ t.classList.add('show'); });
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 function showErr(m){const e=document.getElementById('auth-err');e.textContent=m;e.style.display='block';}
@@ -507,7 +521,11 @@ async function saveTeam(){
     const payload={uid:currentUser.uid,email:currentUser.email,team,updated:firebase.firestore.FieldValue.serverTimestamp()};
     if(docRef){await docRef.set(payload);}
     else{const r=await db.collection('culture_matrix').add(payload);docRef=r;}
-  }catch(e){console.error(e);}
+    showToast('Saved ✓');
+  }catch(e){
+    console.error('Firestore save error:',e);
+    showToast('Save failed — check console','error');
+  }
 }
 
 // ── QUESTIONS ─────────────────────────────────────────────────────────────────
