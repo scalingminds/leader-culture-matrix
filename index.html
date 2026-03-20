@@ -14,293 +14,260 @@
   --gold:#B8860B;--gold-light:#D4A017;
   --cream:#D4C5A9;--cream-light:#F0EAD6;--cream-pale:#FAF7F2;
   --text:#1a1a1a;--text-muted:#6b6b6b;--border:#e0d8c8;
-  --q-tr-bg:#d4edda;--q-tr-border:#74c98a;--q-tr-color:#1B4332;
-  --q-tl-bg:#fdecea;--q-tl-border:#f5a9a9;--q-tl-color:#7a1a1a;
-  --q-br-bg:#e8f5ee;--q-br-border:#a8d8b8;--q-br-color:#1a3a5c;
-  --q-bl-bg:#fff8e1;--q-bl-border:#ffd54f;--q-bl-color:#7a4e00;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--text);min-height:100vh;}
 
 /* ── AUTH ── */
 .auth-wrap{min-height:100vh;background:var(--green);display:flex;align-items:center;justify-content:center;padding:20px;}
-.auth-card{background:#fff;border-radius:16px;padding:44px 40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
-.auth-logo{text-align:center;margin-bottom:28px;}
-.auth-logo img{height:52px;}
-.auth-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--green);text-align:center;margin-bottom:4px;}
-.auth-sub{font-size:0.82rem;color:var(--text-muted);text-align:center;margin-bottom:28px;line-height:1.5;}
+.auth-card{background:#fff;border-radius:16px;padding:44px 40px;width:100%;max-width:420px;box-shadow:0 24px 64px rgba(0,0,0,0.35);}
+.auth-logo{text-align:center;margin-bottom:24px;}
+.auth-logo img{height:56px;}
+.auth-title{font-family:'DM Serif Display',serif;font-size:1.45rem;color:var(--green);text-align:center;margin-bottom:4px;}
+.auth-sub{font-size:0.82rem;color:var(--text-muted);text-align:center;margin-bottom:28px;line-height:1.55;}
 .field{margin-bottom:16px;}
-.field label{display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px;}
+.field label{display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px;}
 .field input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--text);background:var(--cream-pale);transition:border-color 0.15s;}
 .field input:focus{outline:none;border-color:var(--green-light);background:#fff;}
-.auth-btn{width:100%;padding:13px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:6px;}
+.auth-btn{width:100%;padding:13px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:10px;}
 .auth-btn:hover{background:var(--green-mid);}
-.auth-btn.google{background:#fff;color:var(--text);border:1.5px solid var(--border);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.auth-btn.google{background:#fff;color:var(--text);border:1.5px solid var(--border);margin-top:10px;}
 .auth-btn.google:hover{background:var(--cream-pale);}
-.auth-divider{text-align:center;font-size:0.75rem;color:var(--text-muted);margin:12px 0;position:relative;}
-.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
+.auth-divider{text-align:center;font-size:0.74rem;color:var(--text-muted);margin:14px 0;position:relative;}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--border);}
 .auth-divider::before{left:0;}.auth-divider::after{right:0;}
 .auth-err{background:#fdecea;border:1px solid #f5c6cb;color:#c0392b;padding:10px 14px;border-radius:6px;font-size:0.82rem;margin-bottom:14px;display:none;}
-.auth-msg{background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:10px 14px;border-radius:6px;font-size:0.82rem;margin-bottom:14px;display:none;}
-.auth-foot{text-align:center;font-size:0.72rem;color:var(--text-muted);margin-top:18px;}
+.auth-foot{text-align:center;font-size:0.72rem;color:var(--text-muted);margin-top:20px;}
 .app-wrap{display:none;}
 
 /* ── HEADER ── */
-.header{background:var(--green);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold);}
-.hdr-logo img{height:48px;}
-.hdr-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--cream-light);}
+.header{background:var(--green);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold);}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.hdr-logo img{height:44px;display:block;}
+.hdr-divider{width:1px;height:32px;background:rgba(255,255,255,0.2);}
+.hdr-title{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--cream-light);letter-spacing:0.01em;}
 .hdr-right{display:flex;align-items:center;gap:10px;}
-.hdr-user{font-size:0.78rem;color:var(--cream);opacity:0.85;}
-.signout{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:var(--cream-light);padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.hdr-user{font-size:0.76rem;color:var(--cream);opacity:0.8;}
+.signout{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:var(--cream-light);padding:5px 12px;border-radius:4px;font-size:0.74rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.15s;}
 .signout:hover{background:rgba(255,255,255,0.2);}
 
 /* ── MAIN ── */
-.main{max-width:1200px;margin:0 auto;padding:40px;}
+.main{max-width:1200px;margin:0 auto;padding:36px 40px;}
 
 /* ── INTRO ── */
-.intro{margin-bottom:32px;}
-.intro h1{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--green);margin-bottom:8px;}
-.intro p{font-size:0.93rem;color:var(--text-muted);line-height:1.7;max-width:660px;}
-.intro .credit{font-size:0.76rem;color:var(--text-muted);margin-top:6px;font-style:italic;}
+.intro{margin-bottom:28px;}
+.intro h1{font-family:'DM Serif Display',serif;font-size:1.9rem;color:var(--green);margin-bottom:7px;}
+.intro p{font-size:0.92rem;color:var(--text-muted);line-height:1.7;max-width:640px;}
 
-/* ── SUMMARY ── */
-.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;}
-.s-box{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:16px;text-align:center;border-top:4px solid;}
-.s-box.tr{border-top-color:var(--q-tr-color);}
-.s-box.tl{border-top-color:var(--q-tl-color);}
-.s-box.br{border-top-color:var(--q-br-color);}
-.s-box.bl{border-top-color:var(--q-bl-color);}
-.s-num{font-size:2.2rem;font-weight:800;color:var(--green);}
-.s-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:2px;}
+/* ── SUMMARY STRIP ── */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:26px;}
+.s-box{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:14px 12px;text-align:center;border-top:4px solid;}
+.s-box.mission {border-top-color:#1B4332;}
+.s-box.coaching{border-top-color:#1a3a5c;}
+.s-box.toxin   {border-top-color:#7a1a1a;}
+.s-box.easy    {border-top-color:#7a4e00;}
+.s-num{font-size:2rem;font-weight:800;color:var(--green);}
+.s-lbl{font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:2px;}
 
 /* ── TOOL LAYOUT ── */
-.tool-layout{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
+.tool-layout{display:grid;grid-template-columns:1fr 380px;gap:26px;align-items:start;}
 
 /* ── MATRIX ── */
-.matrix-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:24px;}
+.matrix-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:22px;}
 
-/* Axis labels */
-.axis-top-label{
-  text-align:center;font-size:0.68rem;font-weight:700;text-transform:uppercase;
-  letter-spacing:0.1em;color:var(--text-muted);margin-bottom:8px;padding-left:36px;
-  display:flex;align-items:center;gap:6px;justify-content:center;
-}
-.axis-top-label span{display:flex;align-items:center;gap:4px;}
+.axis-x-header{display:flex;align-items:center;padding-left:28px;margin-bottom:8px;gap:0;}
+.ax-lbl{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-muted);white-space:nowrap;}
+.ax-line{flex:1;height:1.5px;background:linear-gradient(to right,#ddd,#aaa);margin:0 8px;}
+.ax-arr{font-size:0.85rem;color:#aaa;}
 
-.matrix-body{display:flex;align-items:stretch;gap:0;}
-.axis-side-label{
+.matrix-body{display:flex;gap:0;align-items:stretch;}
+.axis-y-label{
   writing-mode:vertical-rl;transform:rotate(180deg);
-  font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;
-  color:var(--text-muted);margin-right:8px;text-align:center;flex-shrink:0;width:20px;
-  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;
+  color:var(--text-muted);margin-right:8px;text-align:center;width:18px;flex-shrink:0;
 }
 
 .matrix-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;flex:1;}
 
-/* Quadrant positioning:
-   TL = high culture, low perf  = grid row1 col1
-   TR = high culture, high perf = grid row1 col2   ← STAR
-   BL = low culture, low perf   = grid row2 col1
-   BR = low culture, high perf  = grid row2 col2   ← TOXIN
+/*
+  QUADRANT LAYOUT — axes clarified:
+  Y axis: HIGH CULTURE = top, LOW CULTURE = bottom
+  X axis: LOW PERF = left, HIGH PERF = right
+
+  Andy's framework: low culture = Toxin, regardless of performance
+  Top-left  (TL): High culture, Low perf  → Worth Coaching
+  Top-right (TR): High culture, High perf → Mission-Ready
+  Bot-left  (BL): Low culture,  Low perf  → The Toxin (worst)
+  Bot-right (BR): Low culture,  High perf → The Toxin (dangerous)
+
+  In the grid: row 1 = top, row 2 = bottom; col 1 = left, col 2 = right
 */
-.quadrant{border-radius:10px;padding:14px;min-height:200px;position:relative;transition:box-shadow 0.2s;}
-.quadrant:hover{box-shadow:0 4px 16px rgba(0,0,0,0.1);}
+.quadrant{border-radius:10px;padding:14px;min-height:196px;transition:box-shadow 0.2s;}
+.quadrant:hover{box-shadow:0 4px 14px rgba(0,0,0,0.1);}
 
-.q-tr{background:var(--q-tr-bg);border:2px solid var(--q-tr-border);}
-.q-tl{background:var(--q-tl-bg);border:2px solid var(--q-tl-border);}
-.q-br{background:var(--q-br-bg);border:2px solid var(--q-br-border);}
-.q-bl{background:var(--q-bl-bg);border:2px solid var(--q-bl-border);}
+.q-tr{background:#e8f5ee;border:2px solid #74c98a;}
+.q-tl{background:#e8f0fa;border:2px solid #a8c0e8;}
+.q-br{background:#fdecea;border:2px solid #f5a9a9;}
+.q-bl{background:#fff0e0;border:2px solid #f5c880;}
 
-.q-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.63rem;font-weight:800;text-transform:uppercase;letter-spacing:0.09em;margin-bottom:7px;color:#fff;}
-.q-tr .q-badge{background:var(--q-tr-color);}
-.q-tl .q-badge{background:var(--q-tl-color);}
-.q-br .q-badge{background:var(--q-br-color);}
-.q-bl .q-badge{background:var(--q-bl-color);}
+.q-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.62rem;font-weight:800;text-transform:uppercase;letter-spacing:0.09em;margin-bottom:7px;color:#fff;}
+.q-tr .q-badge{background:#1B4332;}
+.q-tl .q-badge{background:#1a3a5c;}
+.q-br .q-badge{background:#7a1a1a;}
+.q-bl .q-badge{background:#7a4e00;}
 
-.q-name{font-family:'DM Serif Display',serif;font-size:0.98rem;color:var(--text);margin-bottom:3px;line-height:1.3;}
-.q-action{font-size:0.72rem;font-weight:600;color:var(--text-muted);margin-bottom:8px;}
-.q-desc{font-size:0.73rem;color:var(--text-muted);line-height:1.55;margin-bottom:10px;}
-.q-dots{display:flex;flex-wrap:wrap;gap:5px;min-height:24px;}
+.q-name{font-family:'DM Serif Display',serif;font-size:0.96rem;color:var(--text);margin-bottom:3px;line-height:1.3;}
+.q-action{font-size:0.71rem;font-weight:600;color:var(--text-muted);margin-bottom:8px;}
+.q-desc{font-size:0.72rem;color:var(--text-muted);line-height:1.55;margin-bottom:10px;}
+.q-dots{display:flex;flex-wrap:wrap;gap:5px;min-height:22px;}
+.person-dot{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.92);border:1.5px solid rgba(0,0,0,0.1);border-radius:20px;padding:3px 8px 3px 4px;font-size:0.7rem;font-weight:600;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.person-dot:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,0.14);}
+.dot-av{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.54rem;font-weight:700;color:#fff;flex-shrink:0;}
 
-.person-dot{
-  display:inline-flex;align-items:center;gap:4px;
-  background:rgba(255,255,255,0.9);border:1.5px solid rgba(0,0,0,0.12);
-  border-radius:20px;padding:3px 8px 3px 4px;font-size:0.7rem;font-weight:600;
-  cursor:pointer;transition:all 0.15s;white-space:nowrap;
-}
-.person-dot:hover{transform:scale(1.05);box-shadow:0 2px 8px rgba(0,0,0,0.15);}
-.dot-av{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:700;color:#fff;flex-shrink:0;}
-
-/* axis bottom labels */
-.axis-x-wrap{display:flex;align-items:center;padding-left:28px;margin-top:8px;gap:0;}
-.axis-x-end{font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);white-space:nowrap;}
-.axis-x-line{flex:1;height:2px;background:linear-gradient(to right,#ccc,var(--text-muted));margin:0 8px;}
-.axis-x-arrow{font-size:0.9rem;color:var(--text-muted);}
+.axis-x-footer{display:flex;align-items:center;padding-left:26px;margin-top:8px;gap:0;}
 
 /* ── RIGHT PANEL ── */
-.panel-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px;}
-.panel-title{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.panel-title .gdot{width:8px;height:8px;background:var(--gold);border-radius:50%;flex-shrink:0;}
-.form-group{margin-bottom:13px;}
-.form-group label{display:block;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:5px;}
-.form-group input,.form-group textarea{
-  width:100%;padding:9px 12px;border:1.5px solid var(--border);background:var(--cream-pale);
-  font-family:'Inter',sans-serif;font-size:0.84rem;color:var(--text);border-radius:8px;transition:border-color 0.15s;
-}
+.panel-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px;}
+.panel-title{font-size:0.76rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:15px;display:flex;align-items:center;gap:7px;}
+.panel-title .gdot{width:7px;height:7px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+.form-group{margin-bottom:12px;}
+.form-group label{display:block;font-size:0.69rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:5px;}
+.form-group input,.form-group textarea{width:100%;padding:9px 12px;border:1.5px solid var(--border);background:var(--cream-pale);font-family:'Inter',sans-serif;font-size:0.84rem;color:var(--text);border-radius:8px;transition:border-color 0.15s;}
 .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--green-light);background:#fff;}
-.form-group textarea{resize:vertical;min-height:60px;line-height:1.5;}
-
+.form-group textarea{resize:vertical;min-height:58px;line-height:1.5;}
 .start-btn{width:100%;padding:12px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:4px;}
 .start-btn:hover{background:var(--green-mid);}
 
-.person-list{display:flex;flex-direction:column;gap:8px;max-height:360px;overflow-y:auto;}
+.person-list{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow-y:auto;}
 .person-item{display:flex;align-items:flex-start;gap:10px;padding:11px;border:1.5px solid var(--border);border-radius:10px;background:var(--cream-pale);cursor:pointer;transition:all 0.15s;}
 .person-item:hover{border-color:var(--green-light);background:#fff;}
 .pi-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;color:#fff;flex-shrink:0;}
 .pi-info{flex:1;min-width:0;}
-.pi-name{font-size:0.86rem;font-weight:700;color:var(--text);}
+.pi-name{font-size:0.86rem;font-weight:700;}
 .pi-role{font-size:0.72rem;color:var(--text-muted);margin-top:1px;}
-.pi-q{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-top:5px;padding:2px 8px;border-radius:10px;display:inline-block;}
-.pi-scores{font-size:0.7rem;color:var(--text-muted);margin-top:3px;}
+.pi-q{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-top:5px;padding:2px 8px;border-radius:10px;display:inline-block;}
+.pi-scores{font-size:0.69rem;color:var(--text-muted);margin-top:3px;}
 .pi-actions{display:flex;gap:5px;margin-top:7px;}
-.pi-btn{font-size:0.7rem;padding:3px 8px;border-radius:4px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;color:var(--text-muted);transition:all 0.15s;}
+.pi-btn{font-size:0.69rem;padding:3px 8px;border-radius:4px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;color:var(--text-muted);transition:all 0.15s;}
 .pi-btn:hover{border-color:var(--green);color:var(--green);}
 .pi-btn.danger:hover{border-color:#c0392b;color:#c0392b;}
 .pi-delete{background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;padding:2px 4px;border-radius:4px;flex-shrink:0;transition:color 0.15s;}
 .pi-delete:hover{color:#c0392b;}
-.empty-state{text-align:center;padding:24px 12px;color:var(--text-muted);font-size:0.83rem;line-height:1.6;}
+.empty-state{text-align:center;padding:22px 10px;color:var(--text-muted);font-size:0.83rem;line-height:1.6;}
 
-/* ── QUESTION MODAL ── */
-.modal-overlay{
-  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.5);z-index:300;overflow-y:auto;padding:40px 20px;
-  align-items:center;justify-content:center;
-}
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.52);z-index:300;overflow-y:auto;padding:32px 16px;align-items:flex-start;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal-box{
-  background:#fff;border-radius:20px;width:100%;max-width:540px;
-  box-shadow:0 24px 80px rgba(0,0,0,0.3);overflow:hidden;margin:auto;
-}
-.modal-header{background:var(--green);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;}
-.modal-person-info{display:flex;align-items:center;gap:12px;}
-.modal-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,0.3);flex-shrink:0;}
-.modal-person-name{font-family:'DM Serif Display',serif;font-size:1.1rem;color:#fff;}
-.modal-person-role{font-size:0.75rem;color:var(--cream);opacity:0.8;margin-top:1px;}
-.modal-close{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;width:30px;height:30px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.modal-close:hover{background:rgba(255,255,255,0.25);}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:520px;box-shadow:0 28px 80px rgba(0,0,0,0.32);overflow:hidden;margin:auto;}
 
-/* Progress bar */
-.modal-progress{background:rgba(255,255,255,0.15);height:4px;}
-.modal-progress-fill{height:100%;background:var(--gold);transition:width 0.3s ease;}
+.modal-head{background:var(--green);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+.modal-person{display:flex;align-items:center;gap:11px;}
+.modal-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.88rem;font-weight:700;color:#fff;border:2px solid rgba(255,255,255,0.28);flex-shrink:0;}
+.modal-pname{font-family:'DM Serif Display',serif;font-size:1.05rem;color:#fff;}
+.modal-prole{font-size:0.73rem;color:var(--cream);opacity:0.8;margin-top:1px;}
+.modal-x{background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.22);color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.modal-x:hover{background:rgba(255,255,255,0.24);}
 
-.modal-body{padding:28px;}
+.modal-prog{background:rgba(255,255,255,0.14);height:3px;}
+.modal-prog-fill{height:100%;background:var(--gold);transition:width 0.35s ease;}
 
-/* Section title */
-.q-section-header{
-  display:flex;align-items:center;gap:10px;margin-bottom:20px;
-  padding-bottom:14px;border-bottom:2px solid var(--cream-light);
-}
-.q-section-icon{
-  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-size:0.85rem;flex-shrink:0;
-}
-.q-section-icon.culture{background:#e8f5ee;color:var(--green);}
-.q-section-icon.performance{background:#fff8e1;color:var(--q-bl-color);}
-.q-section-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);}
-.q-section-name{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--text);}
-.q-counter{margin-left:auto;font-size:0.75rem;font-weight:700;color:var(--text-muted);}
+.modal-body{padding:26px 26px 24px;}
 
-/* Question */
-.q-question-text{
-  font-size:1.05rem;line-height:1.6;color:var(--text);margin-bottom:8px;
-  font-family:'DM Serif Display',serif;
-}
-.q-context{font-size:0.78rem;color:var(--text-muted);line-height:1.5;margin-bottom:22px;font-style:italic;}
+/* Question step */
+.q-sec-head{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:13px;border-bottom:2px solid var(--cream-light);}
+.q-sec-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.82rem;flex-shrink:0;}
+.q-sec-icon.c{background:#e8f5ee;color:var(--green);}
+.q-sec-icon.p{background:#fff8e1;color:#7a4e00;}
+.q-sec-meta{flex:1;}
+.q-sec-cat{font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);}
+.q-sec-name{font-family:'DM Serif Display',serif;font-size:0.96rem;color:var(--text);}
+.q-counter{font-size:0.73rem;font-weight:700;color:var(--text-muted);white-space:nowrap;}
 
-/* Rating buttons */
-.rating-wrap{margin-bottom:24px;}
-.rating-scale{display:flex;gap:6px;margin-bottom:8px;}
-.rating-btn{
-  flex:1;padding:12px 4px;border:2px solid var(--border);border-radius:10px;
-  background:var(--cream-pale);cursor:pointer;text-align:center;transition:all 0.15s;
-  font-family:'Inter',sans-serif;
-}
-.rating-btn:hover{border-color:var(--green-light);background:#fff;}
-.rating-btn.selected{border-color:var(--green);background:var(--green);color:#fff;}
-.rating-btn.selected .r-num{color:#fff;}
-.rating-btn.selected .r-lbl{color:rgba(255,255,255,0.75);}
-.r-num{font-size:1.1rem;font-weight:800;color:var(--green);display:block;}
-.rating-btn.selected .r-num{color:#fff;}
-.r-lbl{font-size:0.58rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);display:block;margin-top:2px;}
-.rating-endpoints{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-muted);font-weight:600;padding:0 2px;}
+.q-text{font-family:'DM Serif Display',serif;font-size:1.08rem;line-height:1.55;color:var(--text);margin-bottom:6px;}
+.q-sub{font-size:0.77rem;color:var(--text-muted);font-style:italic;margin-bottom:20px;line-height:1.5;}
 
-/* Nav buttons */
-.modal-nav{display:flex;gap:10px;align-items:center;}
-.nav-back{background:none;border:1.5px solid var(--border);color:var(--text-muted);padding:10px 18px;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;}
-.nav-back:hover{border-color:var(--green);color:var(--green);}
-.nav-next{flex:1;padding:12px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:background 0.15s;}
-.nav-next:hover{background:var(--green-mid);}
-.nav-next:disabled{opacity:0.4;cursor:not-allowed;}
+/* Rating */
+.rating-row{display:flex;gap:6px;margin-bottom:7px;}
+.r-btn{flex:1;padding:11px 4px;border:2px solid var(--border);border-radius:10px;background:var(--cream-pale);cursor:pointer;text-align:center;transition:all 0.15s;font-family:'Inter',sans-serif;}
+.r-btn:hover{border-color:var(--green-light);background:#fff;}
+.r-btn.sel{border-color:var(--green);background:var(--green);}
+.r-num{font-size:1.05rem;font-weight:800;color:var(--green);display:block;}
+.r-btn.sel .r-num{color:#fff;}
+.r-word{font-size:0.56rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted);display:block;margin-top:2px;}
+.r-btn.sel .r-word{color:rgba(255,255,255,0.7);}
+.r-ends{display:flex;justify-content:space-between;font-size:0.63rem;color:var(--text-muted);font-weight:600;padding:0 2px;margin-bottom:18px;}
 
-/* Score preview in modal */
-.score-preview{
-  background:var(--cream-pale);border:1.5px solid var(--border);border-radius:10px;
-  padding:14px 16px;margin-bottom:18px;
-}
-.score-preview-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.score-preview-row:last-child{margin-bottom:0;}
-.sp-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);}
-.sp-val{font-size:0.9rem;font-weight:800;color:var(--green);}
-.sp-bar{height:6px;background:var(--cream-light);border-radius:3px;margin-top:4px;overflow:hidden;}
+/* Running score preview */
+.score-prev{background:var(--cream-pale);border:1.5px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:18px;}
+.sp-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.sp-row:last-child{margin-bottom:0;}
+.sp-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);}
+.sp-val{font-size:0.88rem;font-weight:800;color:var(--green);}
+.sp-bar{height:5px;background:var(--cream-light);border-radius:3px;margin-top:4px;overflow:hidden;}
 .sp-fill{height:100%;background:var(--green);border-radius:3px;transition:width 0.4s;}
 
-/* Result reveal */
-.result-reveal{text-align:center;padding:8px 0 16px;}
-.result-q-badge{display:inline-block;padding:6px 18px;border-radius:24px;font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
-.result-name{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--text);margin-bottom:6px;}
-.result-guidance{font-size:0.84rem;color:var(--text-muted);line-height:1.65;text-align:left;background:var(--cream-pale);border-radius:8px;padding:14px;border-left:3px solid var(--gold);margin-top:14px;}
+/* Modal nav */
+.modal-nav{display:flex;gap:10px;}
+.nav-back{background:none;border:1.5px solid var(--border);color:var(--text-muted);padding:10px 16px;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.84rem;font-weight:600;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.nav-back:hover{border-color:var(--green);color:var(--green);}
+.nav-next{flex:1;padding:11px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.87rem;font-weight:700;cursor:pointer;transition:background 0.15s;}
+.nav-next:hover{background:var(--green-mid);}
+.nav-next:disabled{opacity:0.38;cursor:not-allowed;}
+
+/* Result reveal — three stages */
+.result-stage{display:none;}
+.result-stage.show{display:block;}
+
+.result-scores{text-align:center;padding:8px 0 6px;}
+.rs-name{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);margin-bottom:16px;}
+.rs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px;}
+.rs-box{border:1.5px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+.rs-lbl{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:3px;}
+.rs-val{font-size:1.9rem;font-weight:800;color:var(--green);}
+.rs-sub{font-size:0.72rem;color:var(--text-muted);margin-top:2px;}
+.rs-bar{height:5px;background:var(--cream-light);border-radius:3px;margin-top:8px;overflow:hidden;}
+.rs-fill{height:100%;background:var(--green);border-radius:3px;transition:width 0.6s;}
+
+.result-quadrant{text-align:center;padding:8px 0;}
+.rq-badge{display:inline-block;padding:6px 20px;border-radius:24px;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#fff;margin-bottom:10px;animation:badgePop 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes badgePop{from{transform:scale(0.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.rq-name{font-family:'DM Serif Display',serif;font-size:1.3rem;margin-bottom:14px;color:var(--text);}
+.rq-guidance{font-size:0.84rem;color:var(--text);line-height:1.68;background:var(--cream-pale);border-radius:8px;padding:14px;border-left:3px solid var(--gold);text-align:left;}
 
 /* ── DETAIL OVERLAY ── */
-.detail-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:200;overflow-y:auto;padding:40px 20px;}
-.detail-card{background:#fff;border-radius:16px;padding:26px;max-width:480px;margin:0 auto;}
-.back-btn{background:none;border:none;color:var(--green-light);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;padding:0;display:flex;align-items:center;gap:4px;margin-bottom:16px;}
+.detail-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.44);z-index:200;overflow-y:auto;padding:36px 16px;}
+.detail-card{background:#fff;border-radius:16px;padding:24px;max-width:460px;margin:0 auto;}
+.back-btn{background:none;border:none;color:var(--green-light);font-size:0.81rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;padding:0;display:flex;align-items:center;gap:4px;margin-bottom:15px;}
 .back-btn:hover{color:var(--green);}
-.detail-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.detail-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-weight:700;color:#fff;flex-shrink:0;}
-.detail-name{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--text);}
-.detail-role{font-size:0.8rem;color:var(--text-muted);margin-top:2px;}
-.detail-q-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;}
-.detail-scores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.score-box{border:1.5px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
-.score-lbl{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:3px;}
-.score-num{font-size:1.7rem;font-weight:800;color:var(--green);}
-.score-bar{height:4px;background:var(--cream-light);border-radius:2px;margin-top:5px;overflow:hidden;}
-.score-fill{height:100%;background:var(--green);border-radius:2px;transition:width 0.4s;}
-.detail-notes{font-size:0.83rem;color:var(--text);line-height:1.65;background:var(--cream-pale);border-radius:8px;padding:12px;border-left:3px solid var(--gold);margin-bottom:14px;}
-.guidance-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:7px;}
-.guidance-text{font-size:0.84rem;color:var(--text);line-height:1.65;}
+.detail-head{display:flex;align-items:center;gap:11px;margin-bottom:13px;}
+.detail-av{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:#fff;}
+.detail-name{font-family:'DM Serif Display',serif;font-size:1.2rem;}
+.detail-role{font-size:0.79rem;color:var(--text-muted);margin-top:1px;}
+.detail-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#fff;margin-bottom:13px;}
+.detail-scores{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px;}
+.score-box{border:1.5px solid var(--border);border-radius:8px;padding:11px;text-align:center;}
+.sc-lbl{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:2px;}
+.sc-num{font-size:1.65rem;font-weight:800;color:var(--green);}
+.sc-bar{height:4px;background:var(--cream-light);border-radius:2px;margin-top:5px;overflow:hidden;}
+.sc-fill{height:100%;background:var(--green);border-radius:2px;}
+.detail-notes{font-size:0.82rem;color:var(--text);line-height:1.65;background:var(--cream-pale);border-radius:8px;padding:11px;border-left:3px solid var(--gold);margin-bottom:12px;}
+.guidance-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px;}
+.guidance-txt{font-size:0.83rem;color:var(--text);line-height:1.66;margin-bottom:14px;}
+.q-breakdown{border-top:2px solid var(--cream-light);padding-top:13px;margin-top:4px;}
+.qb-lbl{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:9px;}
+.qb-item{margin-bottom:9px;}
+.qb-row{display:flex;justify-content:space-between;font-size:0.73rem;margin-bottom:3px;}
+.qb-q{color:var(--text-muted);flex:1;padding-right:10px;line-height:1.4;}
+.qb-s{font-weight:800;color:var(--green);flex-shrink:0;}
+.qb-bar{height:4px;background:var(--cream-light);border-radius:2px;overflow:hidden;}
+.qb-fill{height:100%;background:var(--green);border-radius:2px;}
 
-/* individual q scores */
-.qs-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;}
-.qs-section-label{font-size:0.67rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-muted);margin-bottom:8px;grid-column:1/-1;}
-.qs-item{display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--cream-pale);border-radius:6px;font-size:0.72rem;}
-.qs-q{color:var(--text-muted);flex:1;padding-right:8px;line-height:1.4;}
-.qs-score{font-weight:800;color:var(--green);flex-shrink:0;}
+/* ── FOOT ── */
+.foot{text-align:center;font-size:0.71rem;color:var(--text-muted);padding:24px 40px;margin-top:4px;border-top:1px solid var(--border);}
 
 /* ── RESPONSIVE ── */
-@media(max-width:960px){
-  .tool-layout{grid-template-columns:1fr;}
-  .main{padding:24px 16px;}
-  .header{padding:14px 20px;}
-  .summary-grid{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:600px){
-  .matrix-grid{grid-template-columns:1fr;}
-  .axis-side-label{display:none;}
-  .modal-body{padding:20px;}
-  .rating-scale{gap:4px;}
-}
-.foot{text-align:center;font-size:0.72rem;color:var(--text-muted);padding:28px;margin-top:8px;}
+@media(max-width:960px){.tool-layout{grid-template-columns:1fr;}.main{padding:24px 18px;}.header{padding:12px 18px;}.summary-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:580px){.matrix-grid{grid-template-columns:1fr;}.axis-y-label{display:none;}.modal-body{padding:18px 18px 16px;}.rating-row{gap:4px;}}
 </style>
 </head>
 <body>
@@ -312,17 +279,23 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
       <img src="scaling_minds_logo.png" alt="Scaling Minds" onerror="this.style.display='none'">
     </div>
     <div class="auth-title">Culture + Performance Matrix</div>
-    <div class="auth-sub">Sign in to map your team and save your assessments.</div>
+    <div class="auth-sub">Sign in to map your team and save your work.</div>
     <div class="auth-err" id="auth-err"></div>
-    <div class="auth-msg" id="auth-msg"></div>
     <div class="field">
       <label>Email</label>
-      <input type="email" id="auth-email" placeholder="you@company.com">
+      <input type="email" id="auth-email" placeholder="you@company.com" onkeydown="if(event.key==='Enter')emailSignIn()">
     </div>
-    <button class="auth-btn" onclick="sendMagicLink()">Send Magic Link</button>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="auth-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')emailSignIn()">
+    </div>
+    <button class="auth-btn" onclick="emailSignIn()">Sign In</button>
+    <div style="text-align:center;margin-top:8px;">
+      <button onclick="emailRegister()" style="background:none;border:none;font-size:0.78rem;color:var(--text-muted);cursor:pointer;font-family:'Inter',sans-serif;text-decoration:underline;">Create an account</button>
+    </div>
     <div class="auth-divider">or</div>
     <button class="auth-btn google" onclick="signInGoogle()">
-      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <svg width="17" height="17" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
       Continue with Google
     </button>
     <div class="auth-foot">© Scaling Minds</div>
@@ -332,8 +305,11 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
 <!-- ── APP ── -->
 <div class="app-wrap" id="app-wrap">
   <div class="header">
-    <div class="hdr-logo"><img src="scaling_minds_logo.png" alt="Scaling Minds" onerror="this.style.display='none'"></div>
-    <div class="hdr-title">Culture + Performance Matrix</div>
+    <div class="hdr-left">
+      <img src="scaling_minds_logo.png" alt="Scaling Minds" style="height:44px;display:block;" onerror="this.style.display='none'">
+      <div class="hdr-divider"></div>
+      <div class="hdr-title">Culture + Performance Matrix</div>
+    </div>
     <div class="hdr-right">
       <span class="hdr-user" id="hdr-user"></span>
       <button class="signout" onclick="signOut()">Sign Out</button>
@@ -343,42 +319,40 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
   <div class="main">
     <div class="intro">
       <h1>Where does each person land?</h1>
-      <p>High performers who erode trust are the most dangerous people on a team. Rate each team member honestly using ten behavioral questions, then decide what leadership requires of you.</p>
-      <div class="credit">Framework drawn from U.S. Navy SEAL evaluation criteria, popularized by Simon Sinek.</div>
+      <p>High performers who erode trust are the most dangerous people on a team. Rate each person honestly using ten behavioral questions, then decide what leadership requires of you.</p>
     </div>
 
-    <!-- Summary -->
     <div class="summary-grid">
-      <div class="s-box tr"><div class="s-num" id="s-tr">0</div><div class="s-lbl">Mission-Ready</div></div>
-      <div class="s-box tl"><div class="s-num" id="s-tl">0</div><div class="s-lbl">The Toxin</div></div>
-      <div class="s-box br"><div class="s-num" id="s-br">0</div><div class="s-lbl">Worth Coaching</div></div>
-      <div class="s-box bl"><div class="s-num" id="s-bl">0</div><div class="s-lbl">Easy Decision</div></div>
+      <div class="s-box mission"><div class="s-num" id="s-tr">0</div><div class="s-lbl">Mission-Ready</div></div>
+      <div class="s-box coaching"><div class="s-num" id="s-tl">0</div><div class="s-lbl">Worth Coaching</div></div>
+      <div class="s-box toxin"><div class="s-num" id="s-br">0</div><div class="s-lbl">The Toxin</div></div>
+      <div class="s-box easy"><div class="s-num" id="s-bl">0</div><div class="s-lbl">Easy Decision</div></div>
     </div>
 
     <div class="tool-layout">
       <!-- MATRIX -->
       <div>
         <div class="matrix-wrap">
-          <!-- X axis top label -->
-          <div class="axis-top-label">
-            <span>Low Performance ←</span>
-            <span style="flex:1;height:2px;background:linear-gradient(to right,#ccc,var(--text-muted));margin:0 10px;"></span>
-            <span>→ High Performance</span>
+          <div class="axis-x-header">
+            <span class="ax-lbl">Low Performance</span>
+            <div class="ax-line"></div>
+            <span class="ax-arr">→</span>
+            <span class="ax-lbl" style="margin-left:4px;">High Performance</span>
           </div>
           <div class="matrix-body">
-            <div class="axis-side-label">↑ High Culture &nbsp;&nbsp; Low Culture ↓</div>
+            <div class="axis-y-label">↑ High Culture &nbsp;&nbsp;&nbsp; Low Culture ↓</div>
             <div style="flex:1;">
               <div class="matrix-grid">
-                <!-- Row 1: High culture -->
-                <!-- TL: High culture, Low performance = TOXIN -->
+                <!-- ROW 1: High Culture (top) -->
+                <!-- TL: High culture, Low perf = Worth Coaching -->
                 <div class="quadrant q-tl">
-                  <span class="q-badge">The Toxin</span>
+                  <span class="q-badge">Worth Coaching</span>
                   <div class="q-name">High Culture, Low Performance</div>
-                  <div class="q-action">Invest — but set a real timeline</div>
-                  <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real. Give honest feedback and genuine support.</div>
+                  <div class="q-action">Invest — the foundation is there</div>
+                  <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real. Give honest feedback and real support.</div>
                   <div class="q-dots" id="dots-tl"></div>
                 </div>
-                <!-- TR: High culture, High performance = MISSION READY -->
+                <!-- TR: High culture, High perf = Mission-Ready -->
                 <div class="quadrant q-tr">
                   <span class="q-badge">Mission-Ready</span>
                   <div class="q-name">High Culture, High Performance</div>
@@ -386,29 +360,29 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
                   <div class="q-desc">These people define what the team can become. They perform and they lift others. Know who they are and act accordingly — they have options.</div>
                   <div class="q-dots" id="dots-tr"></div>
                 </div>
-                <!-- BL: Low culture, Low performance = EASY CALL -->
+                <!-- ROW 2: Low Culture (bottom) -->
+                <!-- BL: Low culture, Low perf = Easy Decision -->
                 <div class="quadrant q-bl">
                   <span class="q-badge">Easy Decision</span>
                   <div class="q-name">Low Culture, Low Performance</div>
                   <div class="q-action">Let go — this one is clear</div>
-                  <div class="q-desc">The hard part here is usually admitting you already know the answer. Move quickly and with care. Slow exits are a kindness to no one.</div>
+                  <div class="q-desc">The hard part is usually admitting you already know the answer. Move quickly and with care. Slow exits are a kindness to no one.</div>
                   <div class="q-dots" id="dots-bl"></div>
                 </div>
-                <!-- BR: Low culture, High performance = WORTH COACHING -->
+                <!-- BR: Low culture, High perf = The Toxin -->
                 <div class="quadrant q-br">
                   <span class="q-badge">The Toxin</span>
                   <div class="q-name">Low Culture, High Performance</div>
-                  <div class="q-action">Cut or transform — no exceptions</div>
+                  <div class="q-action">Act — no exceptions</div>
                   <div class="q-desc">They hit their numbers but leave damage behind. Every day you keep them, you tell the rest of the team that results override how you treat people.</div>
                   <div class="q-dots" id="dots-br"></div>
                 </div>
               </div>
-              <!-- X axis bottom -->
-              <div class="axis-x-wrap">
-                <span class="axis-x-end">Low Performance</span>
-                <div class="axis-x-line"></div>
-                <span class="axis-x-arrow">→</span>
-                <span class="axis-x-end" style="margin-left:4px;">High Performance</span>
+              <div class="axis-x-footer">
+                <span class="ax-lbl">Low Performance</span>
+                <div class="ax-line"></div>
+                <span class="ax-arr">→</span>
+                <span class="ax-lbl" style="margin-left:4px;">High Performance</span>
               </div>
             </div>
           </div>
@@ -417,7 +391,6 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
 
       <!-- RIGHT PANEL -->
       <div>
-        <!-- Add form -->
         <div class="panel-card" id="add-card">
           <div class="panel-title"><span class="gdot"></span><span id="add-card-title">Assess a Team Member</span></div>
           <div class="form-group">
@@ -434,34 +407,33 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
           </div>
           <button class="start-btn" onclick="startAssessment()">Start Assessment →</button>
         </div>
-
-        <!-- Person list -->
         <div class="panel-card">
           <div class="panel-title"><span class="gdot"></span>Your Team (<span id="team-count">0</span>)</div>
           <div class="person-list" id="person-list">
-            <div class="empty-state">Add your first team member above to get started.</div>
+            <div class="empty-state">Add your first team member to get started.</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="foot">© Scaling Minds &nbsp;·&nbsp; Culture + Performance Matrix</div>
   </div>
+
+  <div class="foot">© Scaling Minds &nbsp;·&nbsp; Culture + Performance Matrix</div>
 </div>
 
 <!-- ── QUESTION MODAL ── -->
 <div class="modal-overlay" id="q-modal">
   <div class="modal-box">
-    <div class="modal-header">
-      <div class="modal-person-info">
-        <div class="modal-avatar" id="modal-avatar"></div>
+    <div class="modal-head">
+      <div class="modal-person">
+        <div class="modal-av" id="modal-av"></div>
         <div>
-          <div class="modal-person-name" id="modal-name"></div>
-          <div class="modal-person-role" id="modal-role"></div>
+          <div class="modal-pname" id="modal-pname"></div>
+          <div class="modal-prole" id="modal-prole"></div>
         </div>
       </div>
-      <button class="modal-close" onclick="closeModal()">×</button>
+      <button class="modal-x" onclick="closeModal()">×</button>
     </div>
-    <div class="modal-progress"><div class="modal-progress-fill" id="modal-progress-fill"></div></div>
+    <div class="modal-prog"><div class="modal-prog-fill" id="modal-prog-fill"></div></div>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
@@ -481,35 +453,31 @@ firebase.initializeApp({
 });
 const auth = firebase.auth();
 const db   = firebase.firestore();
-let currentUser = null;
-let team = [];
-let docRef = null;
+let currentUser=null, team=[], docRef=null;
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 function showErr(m){const e=document.getElementById('auth-err');e.textContent=m;e.style.display='block';}
-function showMsg(m){const e=document.getElementById('auth-msg');e.textContent=m;e.style.display='block';}
 
-async function sendMagicLink(){
+async function emailSignIn(){
   const email=document.getElementById('auth-email').value.trim();
-  if(!email){showErr('Enter your email.');return;}
-  try{
-    await auth.sendSignInLinkToEmail(email,{url:window.location.href,handleCodeInApp:true});
-    localStorage.setItem('smEmail',email);
-    showMsg('Magic link sent — check your inbox.');
-  }catch(e){showErr(e.message);}
+  const pw=document.getElementById('auth-pw').value;
+  if(!email||!pw){showErr('Enter your email and password.');return;}
+  try{await auth.signInWithEmailAndPassword(email,pw);}
+  catch(e){showErr(e.message);}
+}
+async function emailRegister(){
+  const email=document.getElementById('auth-email').value.trim();
+  const pw=document.getElementById('auth-pw').value;
+  if(!email||!pw){showErr('Enter your email and a password to create an account.');return;}
+  if(pw.length<6){showErr('Password must be at least 6 characters.');return;}
+  try{await auth.createUserWithEmailAndPassword(email,pw);}
+  catch(e){showErr(e.message);}
 }
 async function signInGoogle(){
   try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());}
   catch(e){showErr(e.message);}
 }
 function signOut(){auth.signOut();}
-
-if(auth.isSignInWithEmailLink(window.location.href)){
-  let email=localStorage.getItem('smEmail')||prompt('Confirm your email:');
-  auth.signInWithEmailLink(email,window.location.href)
-    .then(()=>{localStorage.removeItem('smEmail');window.history.replaceState({},'',window.location.pathname);})
-    .catch(e=>showErr(e.message));
-}
 
 auth.onAuthStateChanged(async user=>{
   if(user){
@@ -541,67 +509,66 @@ async function saveTeam(){
   }catch(e){console.error(e);}
 }
 
-// ── DATA ──────────────────────────────────────────────────────────────────────
-const CULTURE_QS = [
-  { q:"Right now, does this person raise issues openly or let problems fester?",       anchor_lo:"Lets things fester",   anchor_hi:"Always raises issues" },
-  { q:"Does this person behave the same way whether or not leadership is watching?",   anchor_lo:"Very different",       anchor_hi:"Completely consistent" },
-  { q:"When something goes well, does this person give credit or absorb it?",          anchor_lo:"Absorbs credit",       anchor_hi:"Always gives credit" },
-  { q:"Does this person make decisions that serve the team, or protect themselves?",   anchor_lo:"Protects themselves",  anchor_hi:"Serves the team" },
-  { q:"Does this person actively make others feel safe to speak up?",                  anchor_lo:"Rarely",               anchor_hi:"Consistently" }
+// ── QUESTIONS ─────────────────────────────────────────────────────────────────
+// All questions: 5 = always the positive end
+const CQS = [
+  {q:"Right now, does this person raise issues openly or let problems fester?",                         lo:"Lets things fester",  hi:"Always raises issues"},
+  {q:"Does this person behave the same way whether or not leadership is watching?",                     lo:"Very different",       hi:"Completely consistent"},
+  {q:"When things go well, does this person share the credit or take it?",                             lo:"Takes the credit",     hi:"Always shares credit"},
+  {q:"When it matters, does this person choose what&#39;s right for the team over what&#39;s safe for them?", lo:"Protects themselves",  hi:"Serves the team"},
+  {q:"Does this person actively make others feel safe to speak up?",                                   lo:"Rarely",               hi:"Consistently"}
 ];
-const PERF_QS = [
-  { q:"Does this person consistently deliver what they commit to?",                    anchor_lo:"Rarely follows through", anchor_hi:"Always delivers" },
-  { q:"Does this person&#39;s work require significant rework or correction by others?", anchor_lo:"Constant rework",      anchor_hi:"Clean work" },
-  { q:"Does this person solve problems without being pushed, or wait to be told?",     anchor_lo:"Waits to be told",     anchor_hi:"Self-directed" },
-  { q:"Does this person raise the capability of the people around them?",              anchor_lo:"Drains the team",      anchor_hi:"Lifts the team" },
-  { q:"Is this person growing in the role, or have they plateaued?",                  anchor_lo:"Plateaued",            anchor_hi:"Actively growing" }
+const PQS = [
+  {q:"Does this person consistently deliver what they commit to?",                                     lo:"Rarely follows through",hi:"Always delivers"},
+  {q:"Does this person&#39;s work hold up, or does it regularly need fixing by others?",               lo:"Constant rework",      hi:"Always holds up"},
+  {q:"Does this person solve problems without being pushed, or wait to be told?",                      lo:"Waits to be told",     hi:"Self-directed"},
+  {q:"Does this person raise the capability of the people around them?",                               lo:"Drains the team",      hi:"Lifts the team"},
+  {q:"Is this person growing in the role, or have they plateaued?",                                    lo:"Plateaued",            hi:"Actively growing"}
 ];
+const RLABELS=['Rarely','Sometimes','Often','Usually','Always'];
 
-// Quadrant logic: Y = culture (high = top), X = performance (high = right)
-// Grid positions: TL = high culture low perf, TR = high culture high perf,
-//                 BL = low culture low perf,  BR = low culture high perf
-const QUADRANTS = {
-  tr:{ label:'Mission-Ready', color:'#1B4332', bg:'#d4edda' },
-  tl:{ label:'The Toxin',     color:'#7a1a1a', bg:'#fdecea' },
-  br:{ label:'Worth Coaching',color:'#1a3a5c', bg:'#e8f5ee' },
-  bl:{ label:'Easy Decision', color:'#7a4e00', bg:'#fff8e1' }
+// ── QUADRANT LOGIC ─────────────────────────────────────────────────────────────
+// Andy's framework: low culture = Toxin regardless of performance
+// Y: high culture = top (>= 6), X: high perf = right (>= 6)
+const QDEFS = {
+  tr:{label:'Mission-Ready', color:'#1B4332', bg:'#e8f5ee'},
+  tl:{label:'Worth Coaching',color:'#1a3a5c', bg:'#e8f0fa'},
+  br:{label:'The Toxin',     color:'#7a1a1a', bg:'#fdecea'},
+  bl:{label:'Easy Decision', color:'#7a4e00', bg:'#fff0e0'}
 };
 const GUIDANCE = {
   tr:'Protect this person. Tell them explicitly what they mean to the team. Understand what keeps them here. Give them visibility, challenge, and a path — or someone else will.',
-  tl:'This is the hardest and most important call. They may be your top producer. But every day they stay, you&#39;re telling the rest of the team that results override how you treat people. Act.',
-  br:'The culture fit is real, which means the performance gap is workable. Get specific about what isn&#39;t working and give them real support. Set a clear timeline and follow through.',
+  tl:'The culture fit is real, which means the performance gap is workable. Get specific about what isn&#39;t working and give them real support. Set a clear timeline and hold to it.',
+  br:'This is the hardest call. They may be your top producer. But every day they stay, you&#39;re telling the rest of the team that results override how you treat people. They don&#39;t. Act.',
   bl:'This one is usually clearer than it feels. Delaying the conversation doesn&#39;t help them or the team. Move with honesty and care, but move.'
 };
 
-function getQuadrant(culture, perf){
-  const hC = culture >= 6;
-  const hP = perf >= 6;
-  if(hC && hP) return 'tr';
-  if(hC && !hP) return 'tl';
-  if(!hC && hP) return 'br';
+function getQ(culture, perf){
+  const hC=culture>=6, hP=perf>=6;
+  if(hC&&hP) return 'tr';
+  if(hC&&!hP) return 'tl';
+  if(!hC&&hP) return 'br';
   return 'bl';
 }
-
-const COLORS=['#1B4332','#B8860B','#1a3a5c','#7a4e00','#2D6A4F','#c0392b','#5a3e7a','#2c6e8a'];
-function getColor(i){return COLORS[i%COLORS.length];}
-function initials(n){return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
-// Map avg 1-5 score to 1-10 axis value
 function avgToAxis(scores){
-  const avg = scores.reduce((s,v)=>s+v,0)/scores.length;
-  return Math.round(((avg-1)/4)*9+1); // maps 1→1, 5→10
+  const avg=scores.reduce((s,v)=>s+v,0)/scores.length;
+  return Math.round(((avg-1)/4)*9+1);
 }
+const COLORS=['#1B4332','#B8860B','#1a3a5c','#7a4e00','#2D6A4F','#9b2335','#5a3e7a','#2c6e8a'];
+function getColor(i){return COLORS[i%COLORS.length];}
+function inits(n){return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
-  ['tr','tl','br','bl'].forEach(q=>{ document.getElementById('dots-'+q).innerHTML=''; });
+  ['tr','tl','br','bl'].forEach(q=>document.getElementById('dots-'+q).innerHTML='');
   const counts={tr:0,tl:0,br:0,bl:0};
   team.forEach((p,i)=>{
-    const q=getQuadrant(p.culture,p.perf);
+    const q=getQ(p.culture,p.perf);
     counts[q]++;
     const dot=document.createElement('div');
     dot.className='person-dot';
     dot.onclick=()=>showDetail(i);
-    dot.innerHTML=`<div class="dot-av" style="background:${getColor(i)}">${initials(p.name)}</div>${p.name.split(' ')[0]}`;
+    dot.innerHTML=`<div class="dot-av" style="background:${getColor(i)}">${inits(p.name)}</div>${p.name.split(' ')[0]}`;
     document.getElementById('dots-'+q).appendChild(dot);
   });
   document.getElementById('s-tr').textContent=counts.tr;
@@ -610,12 +577,12 @@ function render(){
   document.getElementById('s-bl').textContent=counts.bl;
   document.getElementById('team-count').textContent=team.length;
   const list=document.getElementById('person-list');
-  if(!team.length){list.innerHTML='<div class="empty-state">Add your first team member above to get started.</div>';return;}
+  if(!team.length){list.innerHTML='<div class="empty-state">Add your first team member to get started.</div>';return;}
   list.innerHTML=team.map((p,i)=>{
-    const q=getQuadrant(p.culture,p.perf);
-    const qd=QUADRANTS[q];
+    const q=getQ(p.culture,p.perf);
+    const qd=QDEFS[q];
     return `<div class="person-item" onclick="showDetail(${i})">
-      <div class="pi-avatar" style="background:${getColor(i)}">${initials(p.name)}</div>
+      <div class="pi-avatar" style="background:${getColor(i)}">${inits(p.name)}</div>
       <div class="pi-info">
         <div class="pi-name">${p.name}</div>
         <div class="pi-role">${p.role||'No title'}</div>
@@ -633,268 +600,225 @@ function render(){
 
 function deletePerson(i){
   if(!confirm('Remove '+team[i].name+' from the matrix?'))return;
-  team.splice(i,1);
-  render();saveTeam();closeDetail();
+  team.splice(i,1);render();saveTeam();closeDetail();
 }
 
-// ── ASSESSMENT MODAL ──────────────────────────────────────────────────────────
-let modalState = {
-  personIndex: -1,   // -1 = new person
-  name:'', role:'', notes:'',
-  step: 0,           // 0-4 = culture q's, 5-9 = perf q's, 10 = result
-  answers: []        // length 10: indices 0-4 culture, 5-9 perf
-};
+// ── MODAL STATE ───────────────────────────────────────────────────────────────
+let MS={personIndex:-1,name:'',role:'',notes:'',step:0,answers:[]};
 
 function startAssessment(){
   const name=document.getElementById('p-name').value.trim();
   if(!name){alert('Enter a name first.');return;}
-  modalState={
-    personIndex:-1,
-    name, role:document.getElementById('p-role').value.trim(),
-    notes:document.getElementById('p-notes').value.trim(),
-    step:0, answers:Array(10).fill(null)
-  };
+  MS={personIndex:-1,name,role:document.getElementById('p-role').value.trim(),
+      notes:document.getElementById('p-notes').value.trim(),step:0,answers:Array(10).fill(null)};
   openModal();
 }
-
 function reAssess(i){
   const p=team[i];
-  modalState={
-    personIndex:i,
-    name:p.name, role:p.role||'', notes:p.notes||'',
-    step:0, answers:Array(10).fill(null)
-  };
+  MS={personIndex:i,name:p.name,role:p.role||'',notes:p.notes||'',step:0,answers:Array(10).fill(null)};
   openModal();
 }
-
 function openModal(){
-  document.getElementById('modal-avatar').textContent=initials(modalState.name);
-  document.getElementById('modal-avatar').style.background=
-    modalState.personIndex>=0 ? getColor(modalState.personIndex) : '#1B4332';
-  document.getElementById('modal-name').textContent=modalState.name;
-  document.getElementById('modal-role').textContent=modalState.role||'Team Member';
+  const color=MS.personIndex>=0?getColor(MS.personIndex):'#1B4332';
+  document.getElementById('modal-av').textContent=inits(MS.name);
+  document.getElementById('modal-av').style.background=color;
+  document.getElementById('modal-pname').textContent=MS.name;
+  document.getElementById('modal-prole').textContent=MS.role||'Team Member';
   document.getElementById('q-modal').classList.add('open');
   document.body.style.overflow='hidden';
-  renderModalStep();
+  renderStep();
 }
-
 function closeModal(){
   document.getElementById('q-modal').classList.remove('open');
   document.body.style.overflow='';
-  // reset add form
   document.getElementById('p-name').value='';
   document.getElementById('p-role').value='';
   document.getElementById('p-notes').value='';
   document.getElementById('add-card-title').textContent='Assess a Team Member';
 }
 
-function renderModalStep(){
-  const s=modalState.step;
-  const totalQs=10;
-  const progressPct=Math.round((s/totalQs)*100);
-  document.getElementById('modal-progress-fill').style.width=progressPct+'%';
+// ── RENDER STEP ───────────────────────────────────────────────────────────────
+function renderStep(){
+  const s=MS.step;
+  document.getElementById('modal-prog-fill').style.width=Math.round((s/10)*100)+'%';
 
-  if(s===10){renderResult();return;}
+  if(s===10){renderScoreReveal();return;}
+  if(s===11){renderQuadrantReveal();return;}
 
-  const isCulture = s < 5;
-  const qList = isCulture ? CULTURE_QS : PERF_QS;
-  const qIdx  = isCulture ? s : s-5;
-  const q     = qList[qIdx];
-  const currentAnswer = modalState.answers[s];
+  const isCulture=s<5;
+  const qList=isCulture?CQS:PQS;
+  const qIdx=isCulture?s:s-5;
+  const q=qList[qIdx];
+  const cur=MS.answers[s];
 
-  const LABELS=['Rarely','Sometimes','Often','Usually','Always'];
+  const cAns=MS.answers.slice(0,5).filter(x=>x!==null);
+  const pAns=MS.answers.slice(5,10).filter(x=>x!==null);
 
   let h='';
-  h+=`<div class="q-section-header">`;
-  h+=`<div class="q-section-icon ${isCulture?'culture':'performance'}">${isCulture?'🤝':'⚡'}</div>`;
-  h+=`<div><div class="q-section-label">${isCulture?'Culture Fit':'Performance'} &nbsp;·&nbsp; Question ${qIdx+1} of 5</div>`;
-  h+=`<div class="q-section-name">${isCulture?'Values in Action':'Results and Impact'}</div></div>`;
-  h+=`<div class="q-counter">${s+1} / 10</div>`;
-  h+=`</div>`;
-
-  h+=`<div class="q-question-text">${q.q}</div>`;
-  h+=`<div class="q-context">Rate right now, in this role — not as a general character judgment.</div>`;
-
-  h+=`<div class="rating-wrap">`;
-  h+=`<div class="rating-scale">`;
+  h+=`<div class="q-sec-head">`;
+  h+=`<div class="q-sec-icon ${isCulture?'c':'p'}">${isCulture?'🤝':'⚡'}</div>`;
+  h+=`<div class="q-sec-meta"><div class="q-sec-cat">${isCulture?'Culture Fit':'Performance'} · Question ${qIdx+1} of 5</div>`;
+  h+=`<div class="q-sec-name">${isCulture?'Values in Action':'Results and Impact'}</div></div>`;
+  h+=`<div class="q-counter">${s+1} / 10</div></div>`;
+  h+=`<div class="q-text">${q.q}</div>`;
+  h+=`<div class="q-sub">Rate right now, in this role — not as a general character judgment.</div>`;
+  h+=`<div class="rating-row">`;
   for(let v=1;v<=5;v++){
-    const sel = currentAnswer===v ? 'selected' : '';
-    h+=`<div class="rating-btn ${sel}" onclick="selectRating(${v})">`;
-    h+=`<span class="r-num">${v}</span>`;
-    h+=`<span class="r-lbl">${LABELS[v-1]}</span>`;
-    h+=`</div>`;
+    h+=`<div class="r-btn${cur===v?' sel':''}" onclick="selectRating(${v})">`;
+    h+=`<span class="r-num">${v}</span><span class="r-word">${RLABELS[v-1]}</span></div>`;
   }
   h+=`</div>`;
-  h+=`<div class="rating-endpoints"><span>${q.anchor_lo}</span><span>${q.anchor_hi}</span></div>`;
-  h+=`</div>`;
+  h+=`<div class="r-ends"><span>${q.lo}</span><span>${q.hi}</span></div>`;
 
-  // mini score preview after first answer
-  const cAnswered=modalState.answers.slice(0,5).filter(x=>x!==null);
-  const pAnswered=modalState.answers.slice(5,10).filter(x=>x!==null);
-  if(cAnswered.length>0||pAnswered.length>0){
-    h+=`<div class="score-preview">`;
-    if(cAnswered.length>0){
-      const cavg=avgToAxis(cAnswered);
-      h+=`<div class="score-preview-row"><span class="sp-label">Culture so far</span><span class="sp-val">${cavg}/10</span></div>`;
-      h+=`<div class="sp-bar"><div class="sp-fill" style="width:${cavg*10}%"></div></div>`;
+  if(cAns.length>0||pAns.length>0){
+    h+=`<div class="score-prev">`;
+    if(cAns.length>0){
+      const cv=avgToAxis(cAns);
+      h+=`<div class="sp-row"><span class="sp-lbl">Culture so far</span><span class="sp-val">${cv}/10</span></div>`;
+      h+=`<div class="sp-bar"><div class="sp-fill" style="width:${cv*10}%"></div></div>`;
     }
-    if(pAnswered.length>0){
-      const pavg=avgToAxis(pAnswered);
-      h+=`<div class="score-preview-row" style="margin-top:${cAnswered.length?'8px':'0'}"><span class="sp-label">Performance so far</span><span class="sp-val">${pavg}/10</span></div>`;
-      h+=`<div class="sp-bar"><div class="sp-fill" style="width:${pavg*10}%"></div></div>`;
+    if(pAns.length>0){
+      const pv=avgToAxis(pAns);
+      h+=`<div class="sp-row" style="margin-top:${cAns.length?'9px':'0'}"><span class="sp-lbl">Performance so far</span><span class="sp-val">${pv}/10</span></div>`;
+      h+=`<div class="sp-bar"><div class="sp-fill" style="width:${pv*10}%"></div></div>`;
     }
     h+=`</div>`;
   }
 
   h+=`<div class="modal-nav">`;
   if(s>0) h+=`<button class="nav-back" onclick="goBack()">← Back</button>`;
-  h+=`<button class="nav-next" id="nav-next-btn" onclick="goNext()" ${currentAnswer===null?'disabled':''}>`;
-  h+=(s===9)?'See Result →':'Next →';
-  h+=`</button>`;
+  h+=`<button class="nav-next" id="nav-next" onclick="goNext()" ${cur===null?'disabled':''}>`;
+  h+=(s===9)?'See Scores →':'Next →';
+  h+=`</button></div>`;
+
+  document.getElementById('modal-body').innerHTML=h;
+}
+
+// ── RESULT STAGES ─────────────────────────────────────────────────────────────
+// Stage 1: show scores only — no quadrant color or label yet
+function renderScoreReveal(){
+  document.getElementById('modal-prog-fill').style.width='100%';
+  const cScores=MS.answers.slice(0,5);
+  const pScores=MS.answers.slice(5,10);
+  const cAxis=avgToAxis(cScores);
+  const pAxis=avgToAxis(pScores);
+
+  let h=`<div class="result-scores">`;
+  h+=`<div class="rs-name">${MS.name}</div>`;
+  h+=`<div class="rs-grid">`;
+  h+=`<div class="rs-box"><div class="rs-lbl">Culture Fit</div><div class="rs-val">${cAxis}<span style="font-size:0.9rem;font-weight:400;">/10</span></div>`;
+  h+=`<div class="rs-sub">${cAxis>=7?'Strong fit':cAxis>=5?'Moderate fit':'Low fit'}</div>`;
+  h+=`<div class="rs-bar"><div class="rs-fill" style="width:${cAxis*10}%"></div></div></div>`;
+  h+=`<div class="rs-box"><div class="rs-lbl">Performance</div><div class="rs-val">${pAxis}<span style="font-size:0.9rem;font-weight:400;">/10</span></div>`;
+  h+=`<div class="rs-sub">${pAxis>=7?'Strong performer':pAxis>=5?'Moderate performer':'Underperforming'}</div>`;
+  h+=`<div class="rs-bar"><div class="rs-fill" style="width:${pAxis*10}%"></div></div></div>`;
+  h+=`</div></div>`;
+  h+=`<div class="modal-nav" style="margin-top:20px;">`;
+  h+=`<button class="nav-back" onclick="goBack()">← Review</button>`;
+  h+=`<button class="nav-next" onclick="showQuadrantReveal(${cAxis},${pAxis})">See Where They Land →</button>`;
   h+=`</div>`;
 
   document.getElementById('modal-body').innerHTML=h;
 }
 
-function selectRating(v){
-  modalState.answers[modalState.step]=v;
-  // update UI
-  document.querySelectorAll('.rating-btn').forEach((btn,i)=>{
-    btn.classList.toggle('selected', i+1===v);
-  });
-  document.getElementById('nav-next-btn').disabled=false;
-}
+// Stage 2: quadrant reveal with label, guidance, save
+function showQuadrantReveal(cAxis, pAxis){
+  const q=getQ(cAxis,pAxis);
+  const qd=QDEFS[q];
 
-function goNext(){
-  if(modalState.answers[modalState.step]===null)return;
-  modalState.step++;
-  renderModalStep();
-}
-function goBack(){
-  if(modalState.step>0){modalState.step--;renderModalStep();}
-}
-
-function renderResult(){
-  document.getElementById('modal-progress-fill').style.width='100%';
-  const cScores=modalState.answers.slice(0,5);
-  const pScores=modalState.answers.slice(5,10);
-  const cAxis=avgToAxis(cScores);
-  const pAxis=avgToAxis(pScores);
-  const q=getQuadrant(cAxis,pAxis);
-  const qd=QUADRANTS[q];
-
-  let h='';
-  h+=`<div class="result-reveal">`;
-  h+=`<div class="result-q-badge" style="background:${qd.color};color:#fff">${qd.label}</div>`;
-  h+=`<div class="result-name">${modalState.name}</div>`;
-  h+=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;">`;
-  h+=`<div class="score-box"><div class="score-lbl">Culture Fit</div><div class="score-num">${cAxis}<span style="font-size:0.9rem;font-weight:400;">/10</span></div><div class="score-bar"><div class="score-fill" style="width:${cAxis*10}%"></div></div></div>`;
-  h+=`<div class="score-box"><div class="score-lbl">Performance</div><div class="score-num">${pAxis}<span style="font-size:0.9rem;font-weight:400;">/10</span></div><div class="score-bar"><div class="score-fill" style="width:${pAxis*10}%"></div></div></div>`;
-  h+=`</div>`;
-  h+=`<div class="result-guidance">${GUIDANCE[q]}</div>`;
+  let h=`<div class="result-quadrant">`;
+  h+=`<div class="rq-badge" style="background:${qd.color}">${qd.label}</div>`;
+  h+=`<div class="rq-name">${MS.name}</div>`;
+  h+=`<div class="rq-guidance">${GUIDANCE[q]}</div>`;
   h+=`</div>`;
   h+=`<div class="modal-nav" style="margin-top:20px;">`;
-  h+=`<button class="nav-back" onclick="goBack()">← Review</button>`;
+  h+=`<button class="nav-back" onclick="renderScoreReveal()">← Scores</button>`;
   h+=`<button class="nav-next" onclick="saveFromModal(${cAxis},${pAxis})">Save to Matrix →</button>`;
   h+=`</div>`;
 
   document.getElementById('modal-body').innerHTML=h;
 }
 
-function saveFromModal(cAxis, pAxis){
+// dummy for step 11 (never called, but guard)
+function renderQuadrantReveal(){}
+
+function selectRating(v){
+  MS.answers[MS.step]=v;
+  document.querySelectorAll('.r-btn').forEach((b,i)=>b.classList.toggle('sel',i+1===v));
+  const btn=document.getElementById('nav-next');
+  if(btn) btn.disabled=false;
+}
+function goNext(){
+  if(MS.answers[MS.step]===null)return;
+  MS.step++;
+  renderStep();
+}
+function goBack(){
+  if(MS.step>0){MS.step--;renderStep();}
+}
+
+function saveFromModal(cAxis,pAxis){
   const person={
-    name:modalState.name,
-    role:modalState.role,
-    notes:modalState.notes,
-    culture:cAxis,
-    perf:pAxis,
-    cScores:modalState.answers.slice(0,5),
-    pScores:modalState.answers.slice(5,10)
+    name:MS.name,role:MS.role,notes:MS.notes,
+    culture:cAxis,perf:pAxis,
+    cScores:MS.answers.slice(0,5),
+    pScores:MS.answers.slice(5,10)
   };
-  if(modalState.personIndex>=0){ team[modalState.personIndex]=person; }
-  else { team.push(person); }
-  closeModal();
-  render();
-  saveTeam();
+  if(MS.personIndex>=0){team[MS.personIndex]=person;}
+  else{team.push(person);}
+  closeModal();render();saveTeam();
 }
 
 // ── DETAIL VIEW ───────────────────────────────────────────────────────────────
 function showDetail(i){
   const p=team[i];
-  const q=getQuadrant(p.culture,p.perf);
-  const qd=QUADRANTS[q];
-  const inner=document.getElementById('detail-inner');
+  const q=getQ(p.culture,p.perf);
+  const qd=QDEFS[q];
 
-  const cScores=p.cScores||[];
-  const pScores=p.pScores||[];
-
-  let h='';
-  h+=`<button class="back-btn" onclick="closeDetail()">← Back to Matrix</button>`;
-  h+=`<div class="detail-header">`;
-  h+=`<div class="detail-avatar" style="background:${getColor(i)}">${initials(p.name)}</div>`;
-  h+=`<div><div class="detail-name">${p.name}</div><div class="detail-role">${p.role||'No title set'}</div></div>`;
-  h+=`</div>`;
-  h+=`<div class="detail-q-badge" style="background:${qd.color};color:#fff">${qd.label}</div>`;
+  let h=`<button class="back-btn" onclick="closeDetail()">← Back to Matrix</button>`;
+  h+=`<div class="detail-head"><div class="detail-av" style="background:${getColor(i)}">${inits(p.name)}</div>`;
+  h+=`<div><div class="detail-name">${p.name}</div><div class="detail-role">${p.role||'No title set'}</div></div></div>`;
+  h+=`<div class="detail-badge" style="background:${qd.color}">${qd.label}</div>`;
   h+=`<div class="detail-scores">`;
-  h+=`<div class="score-box"><div class="score-lbl">Culture Fit</div><div class="score-num">${p.culture}<span style="font-size:0.9rem;font-weight:400;">/10</span></div><div class="score-bar"><div class="score-fill" style="width:${p.culture*10}%"></div></div></div>`;
-  h+=`<div class="score-box"><div class="score-lbl">Performance</div><div class="score-num">${p.perf}<span style="font-size:0.9rem;font-weight:400;">/10</span></div><div class="score-bar"><div class="score-fill" style="width:${p.perf*10}%"></div></div></div>`;
+  h+=`<div class="score-box"><div class="sc-lbl">Culture Fit</div><div class="sc-num">${p.culture}<span style="font-size:0.85rem;font-weight:400;">/10</span></div><div class="sc-bar"><div class="sc-fill" style="width:${p.culture*10}%"></div></div></div>`;
+  h+=`<div class="score-box"><div class="sc-lbl">Performance</div><div class="sc-num">${p.perf}<span style="font-size:0.85rem;font-weight:400;">/10</span></div><div class="sc-bar"><div class="sc-fill" style="width:${p.perf*10}%"></div></div></div>`;
   h+=`</div>`;
   if(p.notes) h+=`<div class="detail-notes">${p.notes}</div>`;
-  h+=`<div class="guidance-title">What this requires of you</div>`;
-  h+=`<div class="guidance-text" style="margin-bottom:16px;">${GUIDANCE[q]}</div>`;
+  h+=`<div class="guidance-lbl">What this requires of you</div>`;
+  h+=`<div class="guidance-txt">${GUIDANCE[q]}</div>`;
 
-  // Question-level scores if available
-  if(cScores.length===5&&pScores.length===5){
-    h+=`<div style="border-top:2px solid var(--cream-light);padding-top:14px;margin-top:4px;">`;
-    h+=`<div class="guidance-title" style="margin-bottom:10px;">Question Breakdown</div>`;
-    h+=`<div style="margin-bottom:10px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-muted);">Culture Fit</div>`;
-    CULTURE_QS.forEach((q,qi)=>{
-      const score=cScores[qi];
-      const pct=((score-1)/4)*100;
-      h+=`<div style="margin-bottom:8px;">`;
-      h+=`<div style="display:flex;justify-content:space-between;font-size:0.74rem;margin-bottom:3px;">`;
-      h+=`<span style="color:var(--text-muted);flex:1;padding-right:12px;line-height:1.4;">${q.q}</span>`;
-      h+=`<span style="font-weight:800;color:var(--green);flex-shrink:0;">${score}/5</span>`;
-      h+=`</div>`;
-      h+=`<div style="height:4px;background:var(--cream-light);border-radius:2px;overflow:hidden;"><div style="height:100%;background:var(--green);border-radius:2px;width:${pct}%;"></div></div>`;
-      h+=`</div>`;
+  if((p.cScores||[]).length===5&&(p.pScores||[]).length===5){
+    h+=`<div class="q-breakdown">`;
+    h+=`<div class="qb-lbl">Culture Fit — Question Breakdown</div>`;
+    CQS.forEach((cq,qi)=>{
+      const sc=p.cScores[qi];
+      h+=`<div class="qb-item"><div class="qb-row"><span class="qb-q">${cq.q}</span><span class="qb-s">${sc}/5</span></div>`;
+      h+=`<div class="qb-bar"><div class="qb-fill" style="width:${((sc-1)/4)*100}%"></div></div></div>`;
     });
-    h+=`<div style="margin-top:12px;margin-bottom:10px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-muted);">Performance</div>`;
-    PERF_QS.forEach((q,qi)=>{
-      const score=pScores[qi];
-      const pct=((score-1)/4)*100;
-      h+=`<div style="margin-bottom:8px;">`;
-      h+=`<div style="display:flex;justify-content:space-between;font-size:0.74rem;margin-bottom:3px;">`;
-      h+=`<span style="color:var(--text-muted);flex:1;padding-right:12px;line-height:1.4;">${q.q}</span>`;
-      h+=`<span style="font-weight:800;color:var(--green);flex-shrink:0;">${score}/5</span>`;
-      h+=`</div>`;
-      h+=`<div style="height:4px;background:var(--cream-light);border-radius:2px;overflow:hidden;"><div style="height:100%;background:var(--green);border-radius:2px;width:${pct}%;"></div></div>`;
-      h+=`</div>`;
+    h+=`<div class="qb-lbl" style="margin-top:12px;">Performance — Question Breakdown</div>`;
+    PQS.forEach((pq,qi)=>{
+      const sc=p.pScores[qi];
+      h+=`<div class="qb-item"><div class="qb-row"><span class="qb-q">${pq.q}</span><span class="qb-s">${sc}/5</span></div>`;
+      h+=`<div class="qb-bar"><div class="qb-fill" style="width:${((sc-1)/4)*100}%"></div></div></div>`;
     });
     h+=`</div>`;
   }
 
-  h+=`<div style="margin-top:18px;display:flex;gap:10px;">`;
+  h+=`<div style="margin-top:16px;display:flex;gap:9px;">`;
   h+=`<button class="pi-btn" style="flex:1;padding:9px;" onclick="closeDetail();reAssess(${i})">Re-assess</button>`;
-  h+=`<button class="pi-btn danger" style="padding:9px 14px;" onclick="deletePerson(${i})">Remove</button>`;
+  h+=`<button class="pi-btn danger" style="padding:9px 13px;" onclick="deletePerson(${i})">Remove</button>`;
   h+=`</div>`;
 
-  inner.innerHTML=h;
+  document.getElementById('detail-inner').innerHTML=h;
   document.getElementById('detail-overlay').style.display='block';
   document.body.style.overflow='hidden';
 }
-
 function closeDetail(){
   document.getElementById('detail-overlay').style.display='none';
   document.body.style.overflow='';
 }
-
-document.getElementById('detail-overlay').addEventListener('click',function(e){
-  if(e.target===this) closeDetail();
-});
-document.getElementById('q-modal').addEventListener('click',function(e){
-  if(e.target===this) closeModal();
-});
+document.getElementById('detail-overlay').addEventListener('click',function(e){if(e.target===this)closeDetail();});
+document.getElementById('q-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 </script>
 </body>
 </html>
