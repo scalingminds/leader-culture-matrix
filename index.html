@@ -325,8 +325,8 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
 
     <div class="summary-grid">
       <div class="s-box mission"><div class="s-num" id="s-tr">0</div><div class="s-lbl">Mission-Ready</div></div>
-      <div class="s-box coaching"><div class="s-num" id="s-tl">0</div><div class="s-lbl">Worth Coaching</div></div>
-      <div class="s-box toxin"><div class="s-num" id="s-br">0</div><div class="s-lbl">The Toxin</div></div>
+      <div class="s-box toxin"><div class="s-num" id="s-tl">0</div><div class="s-lbl">The Toxin</div></div>
+      <div class="s-box coaching"><div class="s-num" id="s-br">0</div><div class="s-lbl">Worth Coaching</div></div>
       <div class="s-box easy"><div class="s-num" id="s-bl">0</div><div class="s-lbl">Easy Decision</div></div>
     </div>
 
@@ -335,55 +335,55 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
       <div>
         <div class="matrix-wrap">
           <div class="axis-x-header">
-            <span class="ax-lbl">Low Performance</span>
+            <span class="ax-lbl">Low Culture</span>
             <div class="ax-line"></div>
             <span class="ax-arr">→</span>
-            <span class="ax-lbl" style="margin-left:4px;">High Performance</span>
+            <span class="ax-lbl" style="margin-left:4px;">High Culture</span>
           </div>
           <div class="matrix-body">
-            <div class="axis-y-label">↓ Low Culture &nbsp;&nbsp;&nbsp; High Culture ↑</div>
+            <div class="axis-y-label">↓ Low Performance &nbsp;&nbsp;&nbsp; High Performance ↑</div>
             <div style="flex:1;">
               <div style="position:relative;">
               <div class="matrix-grid" id="matrix-grid">
-                <!-- ROW 1: High Culture (top) -->
-                <!-- TL: High culture, Low perf = Worth Coaching -->
-                <div class="quadrant q-tl">
-                  <span class="q-badge">Worth Coaching</span>
-                  <div class="q-name">High Culture, Low Performance</div>
-                  <div class="q-action">Invest — the foundation is there</div>
-                  <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real.</div>
+                <!-- ROW 1: High Performance (top) -->
+                <!-- TL: High perf, Low culture = The Toxin -->
+                <div class="quadrant q-br">
+                  <span class="q-badge">The Toxin</span>
+                  <div class="q-name">High Performance, Low Culture</div>
+                  <div class="q-action">Act — no exceptions</div>
+                  <div class="q-desc">They hit their numbers but leave damage behind. Every day you keep them, you tell the team that results override how you treat people.</div>
                 </div>
-                <!-- TR: High culture, High perf = Mission-Ready -->
+                <!-- TR: High perf, High culture = Mission-Ready -->
                 <div class="quadrant q-tr">
                   <span class="q-badge">Mission-Ready</span>
-                  <div class="q-name">High Culture, High Performance</div>
+                  <div class="q-name">High Performance, High Culture</div>
                   <div class="q-action">Protect, promote, and learn from</div>
                   <div class="q-desc">These people define what the team can become. They perform and they lift others. Know who they are — they have options.</div>
                 </div>
-                <!-- ROW 2: Low Culture (bottom) -->
-                <!-- BL: Low culture, Low perf = Easy Decision -->
+                <!-- ROW 2: Low Performance (bottom) -->
+                <!-- BL: Low perf, Low culture = Easy Decision -->
                 <div class="quadrant q-bl">
                   <span class="q-badge">Easy Decision</span>
-                  <div class="q-name">Low Culture, Low Performance</div>
+                  <div class="q-name">Low Performance, Low Culture</div>
                   <div class="q-action">Let go — this one is clear</div>
                   <div class="q-desc">The hard part is usually admitting you already know the answer. Move quickly and with care. Slow exits are a kindness to no one.</div>
                 </div>
-                <!-- BR: Low culture, High perf = The Toxin -->
-                <div class="quadrant q-br">
-                  <span class="q-badge">The Toxin</span>
-                  <div class="q-name">Low Culture, High Performance</div>
-                  <div class="q-action">Act — no exceptions</div>
-                  <div class="q-desc">They hit their numbers but leave damage behind. Every day you keep them, you tell the team that results override how you treat people.</div>
+                <!-- BR: Low perf, High culture = Worth Coaching -->
+                <div class="quadrant q-tl">
+                  <span class="q-badge">Worth Coaching</span>
+                  <div class="q-name">Low Performance, High Culture</div>
+                  <div class="q-action">Invest — the foundation is there</div>
+                  <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real.</div>
                 </div>
               </div><!-- /matrix-grid -->
               <!-- SVG plot overlay — people plotted at exact coordinates -->
               <svg id="plot-svg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
               </div><!-- /relative wrapper -->
               <div class="axis-x-footer">
-                <span class="ax-lbl">Low Performance</span>
+                <span class="ax-lbl">Low Culture</span>
                 <div class="ax-line"></div>
                 <span class="ax-arr">→</span>
-                <span class="ax-lbl" style="margin-left:4px;">High Performance</span>
+                <span class="ax-lbl" style="margin-left:4px;">High Culture</span>
               </div>
             </div>
           </div>
@@ -529,27 +529,30 @@ const PQS = [
 const RLABELS=['Rarely','Sometimes','Often','Usually','Always'];
 
 // ── QUADRANT LOGIC ─────────────────────────────────────────────────────────────
-// Andy's framework: low culture = Toxin regardless of performance
-// Y: high culture = top (>= 6), X: high perf = right (>= 6)
+// X = culture (high = right), Y = performance (high = top)
+// tr = Mission-Ready, tl = The Toxin, br = Worth Coaching, bl = Easy Decision
 const QDEFS = {
   tr:{label:'Mission-Ready', color:'#1B4332', bg:'#e8f5ee'},
-  tl:{label:'Worth Coaching',color:'#1a3a5c', bg:'#e8f0fa'},
-  br:{label:'The Toxin',     color:'#7a1a1a', bg:'#fdecea'},
+  tl:{label:'The Toxin',     color:'#7a1a1a', bg:'#fdecea'},
+  br:{label:'Worth Coaching',color:'#1a3a5c', bg:'#e8f0fa'},
   bl:{label:'Easy Decision', color:'#7a4e00', bg:'#fff0e0'}
 };
 const GUIDANCE = {
   tr:'Protect this person. Tell them explicitly what they mean to the team. Understand what keeps them here. Give them visibility, challenge, and a path — or someone else will.',
-  tl:'The culture fit is real, which means the performance gap is workable. Get specific about what isn&#39;t working and give them real support. Set a clear timeline and hold to it.',
-  br:'This is the hardest call. They may be your top producer. But every day they stay, you&#39;re telling the rest of the team that results override how you treat people. They don&#39;t. Act.',
+  tl:'This is the hardest call. They may be your top producer. But every day they stay, you&#39;re telling the rest of the team that results override how you treat people. They don&#39;t. Act.',
+  br:'The culture fit is real, which means the performance gap is workable. Get specific about what isn&#39;t working and give them real support. Set a clear timeline and hold to it.',
   bl:'This one is usually clearer than it feels. Delaying the conversation doesn&#39;t help them or the team. Move with honesty and care, but move.'
 };
 
 function getQ(culture, perf){
+  // X = culture (high = right), Y = performance (high = top)
+  // tr = high perf + high culture, tl = high perf + low culture (Toxin)
+  // br = low perf + high culture (Worth Coaching), bl = low perf + low culture
   const hC=culture>=6, hP=perf>=6;
-  if(hC&&hP) return 'tr';
-  if(hC&&!hP) return 'tl';
-  if(!hC&&hP) return 'br';
-  return 'bl';
+  if(hC&&hP) return 'tr';   // Mission-Ready
+  if(!hC&&hP) return 'tl';  // The Toxin  (high perf, low culture)
+  if(hC&&!hP) return 'br';  // Worth Coaching (low perf, high culture)
+  return 'bl';               // Easy Decision
 }
 function avgToAxis(scores){
   const avg=scores.reduce((s,v)=>s+v,0)/scores.length;
@@ -611,15 +614,13 @@ function plotDots(){
   const offY = rect.top - svgRect.top;
 
   // Coordinate mapping:
-  // X axis: perf 1→10, left→right
-  // Y axis: culture 1→10, bottom→top (high culture = top)
-  // Add padding so dots don't sit on edges
-  const PAD = 0.07; // 7% padding from edges
+  // X axis: culture 1→10, left→right
+  // Y axis: performance 1→10, bottom→top (high perf = top, so invert)
+  const PAD = 0.07;
 
   team.forEach((p,i)=>{
-    // Normalise 1-10 to 0-1, with padding
-    const nx = PAD + ((p.perf - 1) / 9) * (1 - 2*PAD);
-    const ny = PAD + ((10 - p.culture) / 9) * (1 - 2*PAD); // invert Y
+    const nx = PAD + ((p.culture - 1) / 9) * (1 - 2*PAD);
+    const ny = PAD + ((10 - p.perf) / 9) * (1 - 2*PAD); // invert Y: high perf = top
 
     const cx = offX + nx * W;
     const cy = offY + ny * H;
