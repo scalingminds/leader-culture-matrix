@@ -708,12 +708,12 @@ function startAssessment(){
   if(!name){alert('Enter a name first.');return;}
   MS={personIndex:-1,name,role:document.getElementById('p-role').value.trim(),
       notes:document.getElementById('p-notes').value.trim(),step:0,answers:Array(10).fill(null),
-      gutCulture:null,gutPerf:null};
+      gutCulture:null,gutPerf:null,tbCAxis:null,tbPAxis:null};
   openModal();
 }
 function reAssess(i){
   const p=team[i];
-  MS={personIndex:i,name:p.name,role:p.role||'',notes:p.notes||'',step:0,answers:Array(10).fill(null),gutCulture:null,gutPerf:null};
+  MS={personIndex:i,name:p.name,role:p.role||'',notes:p.notes||'',step:0,answers:Array(10).fill(null),gutCulture:null,gutPerf:null,tbCAxis:null,tbPAxis:null};
   openModal();
 }
 function openModal(){
@@ -826,6 +826,7 @@ function renderScoreReveal(){
 
 // Stage 1.5: tie-breaker — only shows when score is 5 or 6 on either axis
 function showTieBreaker(cAxis, pAxis){
+  MS.tbCAxis=cAxis; MS.tbPAxis=pAxis; // store so renderTieButtons can call back safely
   const cBoundary = cAxis>=5&&cAxis<=6;
   const pBoundary = pAxis>=5&&pAxis<=6;
 
@@ -877,16 +878,7 @@ function showTieBreaker(cAxis, pAxis){
 }
 
 function renderTieButtons(){
-  // Re-render just the nav button state without full redraw
-  const btn=document.getElementById('tie-next');
-  if(!btn) return;
-  // Check both guts answered
-  const body=document.getElementById('modal-body').innerHTML;
-  const cDone = body.includes('gutCulture') ? !!MS.gutCulture : true;
-  const pDone = body.includes('gutPerf') ? !!MS.gutPerf : true;
-  // Simpler: just re-call showTieBreaker to re-render with updated state
-  const match = btn.getAttribute('onclick').match(/showQuadrantReveal\((\d+),(\d+)/);
-  if(match){ showTieBreaker(parseInt(match[1]),parseInt(match[2])); }
+  if(MS.tbCAxis!=null) showTieBreaker(MS.tbCAxis, MS.tbPAxis);
 }
 
 function buildGutNote(){
