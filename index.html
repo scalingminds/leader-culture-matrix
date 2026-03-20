@@ -343,23 +343,22 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
           <div class="matrix-body">
             <div class="axis-y-label">↑ High Culture &nbsp;&nbsp;&nbsp; Low Culture ↓</div>
             <div style="flex:1;">
-              <div class="matrix-grid">
+              <div style="position:relative;">
+              <div class="matrix-grid" id="matrix-grid">
                 <!-- ROW 1: High Culture (top) -->
                 <!-- TL: High culture, Low perf = Worth Coaching -->
                 <div class="quadrant q-tl">
                   <span class="q-badge">Worth Coaching</span>
                   <div class="q-name">High Culture, Low Performance</div>
                   <div class="q-action">Invest — the foundation is there</div>
-                  <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real. Give honest feedback and real support.</div>
-                  <div class="q-dots" id="dots-tl"></div>
+                  <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real.</div>
                 </div>
                 <!-- TR: High culture, High perf = Mission-Ready -->
                 <div class="quadrant q-tr">
                   <span class="q-badge">Mission-Ready</span>
                   <div class="q-name">High Culture, High Performance</div>
                   <div class="q-action">Protect, promote, and learn from</div>
-                  <div class="q-desc">These people define what the team can become. They perform and they lift others. Know who they are and act accordingly — they have options.</div>
-                  <div class="q-dots" id="dots-tr"></div>
+                  <div class="q-desc">These people define what the team can become. They perform and they lift others. Know who they are — they have options.</div>
                 </div>
                 <!-- ROW 2: Low Culture (bottom) -->
                 <!-- BL: Low culture, Low perf = Easy Decision -->
@@ -368,17 +367,18 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
                   <div class="q-name">Low Culture, Low Performance</div>
                   <div class="q-action">Let go — this one is clear</div>
                   <div class="q-desc">The hard part is usually admitting you already know the answer. Move quickly and with care. Slow exits are a kindness to no one.</div>
-                  <div class="q-dots" id="dots-bl"></div>
                 </div>
                 <!-- BR: Low culture, High perf = The Toxin -->
                 <div class="quadrant q-br">
                   <span class="q-badge">The Toxin</span>
                   <div class="q-name">Low Culture, High Performance</div>
                   <div class="q-action">Act — no exceptions</div>
-                  <div class="q-desc">They hit their numbers but leave damage behind. Every day you keep them, you tell the rest of the team that results override how you treat people.</div>
-                  <div class="q-dots" id="dots-br"></div>
+                  <div class="q-desc">They hit their numbers but leave damage behind. Every day you keep them, you tell the team that results override how you treat people.</div>
                 </div>
-              </div>
+              </div><!-- /matrix-grid -->
+              <!-- SVG plot overlay — people plotted at exact coordinates -->
+              <svg id="plot-svg" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:visible;"></svg>
+              </div><!-- /relative wrapper -->
               <div class="axis-x-footer">
                 <span class="ax-lbl">Low Performance</span>
                 <div class="ax-line"></div>
@@ -561,22 +561,17 @@ function inits(n){return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
-  ['tr','tl','br','bl'].forEach(q=>document.getElementById('dots-'+q).innerHTML='');
   const counts={tr:0,tl:0,br:0,bl:0};
-  team.forEach((p,i)=>{
-    const q=getQ(p.culture,p.perf);
-    counts[q]++;
-    const dot=document.createElement('div');
-    dot.className='person-dot';
-    dot.onclick=()=>showDetail(i);
-    dot.innerHTML=`<div class="dot-av" style="background:${getColor(i)}">${inits(p.name)}</div>${p.name.split(' ')[0]}`;
-    document.getElementById('dots-'+q).appendChild(dot);
-  });
+  team.forEach(p=>{ counts[getQ(p.culture,p.perf)]++; });
   document.getElementById('s-tr').textContent=counts.tr;
   document.getElementById('s-tl').textContent=counts.tl;
   document.getElementById('s-br').textContent=counts.br;
   document.getElementById('s-bl').textContent=counts.bl;
   document.getElementById('team-count').textContent=team.length;
+
+  // Plot dots on SVG after layout settles
+  requestAnimationFrame(()=>plotDots());
+
   const list=document.getElementById('person-list');
   if(!team.length){list.innerHTML='<div class="empty-state">Add your first team member to get started.</div>';return;}
   list.innerHTML=team.map((p,i)=>{
@@ -597,6 +592,107 @@ function render(){
       <button class="pi-delete" onclick="event.stopPropagation();deletePerson(${i})">×</button>
     </div>`;
   }).join('');
+}
+
+function plotDots(){
+  const svg = document.getElementById('plot-svg');
+  const grid = document.getElementById('matrix-grid');
+  if(!svg||!grid) return;
+  svg.innerHTML='';
+
+  if(!team.length) return;
+
+  const rect = grid.getBoundingClientRect();
+  const svgRect = svg.parentElement.getBoundingClientRect();
+  const W = rect.width;
+  const H = rect.height;
+  // offset of grid inside the relative wrapper
+  const offX = rect.left - svgRect.left;
+  const offY = rect.top - svgRect.top;
+
+  // Coordinate mapping:
+  // X axis: perf 1→10, left→right
+  // Y axis: culture 1→10, bottom→top (high culture = top)
+  // Add padding so dots don't sit on edges
+  const PAD = 0.07; // 7% padding from edges
+
+  team.forEach((p,i)=>{
+    // Normalise 1-10 to 0-1, with padding
+    const nx = PAD + ((p.perf - 1) / 9) * (1 - 2*PAD);
+    const ny = PAD + ((10 - p.culture) / 9) * (1 - 2*PAD); // invert Y
+
+    const cx = offX + nx * W;
+    const cy = offY + ny * H;
+    const R = 18;
+    const color = getColor(i);
+    const label = p.name.split(' ')[0];
+
+    // Shadow circle
+    const shadow = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    shadow.setAttribute('cx', cx);
+    shadow.setAttribute('cy', cy);
+    shadow.setAttribute('r', R+2);
+    shadow.setAttribute('fill','rgba(0,0,0,0.15)');
+    shadow.setAttribute('transform',`translate(1,2)`);
+    svg.appendChild(shadow);
+
+    // Main circle
+    const circ = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circ.setAttribute('cx', cx);
+    circ.setAttribute('cy', cy);
+    circ.setAttribute('r', R);
+    circ.setAttribute('fill', color);
+    circ.setAttribute('stroke','#fff');
+    circ.setAttribute('stroke-width','2.5');
+    circ.style.cursor='pointer';
+    circ.style.pointerEvents='all';
+    circ.addEventListener('click',()=>showDetail(i));
+    svg.appendChild(circ);
+
+    // Initials text
+    const txt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x', cx);
+    txt.setAttribute('y', cy - 3);
+    txt.setAttribute('text-anchor','middle');
+    txt.setAttribute('dominant-baseline','middle');
+    txt.setAttribute('fill','#fff');
+    txt.setAttribute('font-size','9');
+    txt.setAttribute('font-weight','700');
+    txt.setAttribute('font-family','Inter,sans-serif');
+    txt.style.pointerEvents='none';
+    txt.textContent=inits(p.name);
+    svg.appendChild(txt);
+
+    // Name label below circle — white pill
+    const lblW = Math.max(label.length * 7 + 12, 40);
+    const lblX = cx - lblW/2;
+    const lblY = cy + R + 4;
+
+    const pill = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    pill.setAttribute('x', lblX);
+    pill.setAttribute('y', lblY);
+    pill.setAttribute('width', lblW);
+    pill.setAttribute('height', 16);
+    pill.setAttribute('rx', 8);
+    pill.setAttribute('fill','rgba(255,255,255,0.92)');
+    pill.setAttribute('stroke','rgba(0,0,0,0.1)');
+    pill.setAttribute('stroke-width','1');
+    pill.style.pointerEvents='none';
+    svg.appendChild(pill);
+
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lbl.setAttribute('x', cx);
+    lbl.setAttribute('y', lblY + 8);
+    lbl.setAttribute('text-anchor','middle');
+    lbl.setAttribute('dominant-baseline','middle');
+    lbl.setAttribute('fill','#1a1a1a');
+    lbl.setAttribute('font-size','9');
+    lbl.setAttribute('font-weight','600');
+    lbl.setAttribute('font-family','Inter,sans-serif');
+    lbl.style.pointerEvents='none';
+    lbl.textContent=label;
+    svg.appendChild(lbl);
+  });
 }
 
 function deletePerson(i){
@@ -819,6 +915,7 @@ function closeDetail(){
 }
 document.getElementById('detail-overlay').addEventListener('click',function(e){if(e.target===this)closeDetail();});
 document.getElementById('q-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+window.addEventListener('resize',()=>{ if(team.length) plotDots(); });
 </script>
 </body>
 </html>
