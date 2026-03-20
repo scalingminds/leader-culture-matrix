@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Culture + Performance Matrix — Scaling Minds</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<style>
+:root{
+  --green:#1B4332;--green-mid:#2D6A4F;--green-light:#40916C;
+  --gold:#B8860B;--gold-light:#D4A017;
+  --cream:#D4C5A9;--cream-light:#F0EAD6;--cream-pale:#FAF7F2;
+  --white:#FFFFFF;--text:#1a1a1a;--text-muted:#6b6b6b;--border:#e0d8c8;
+  --q-green:#1B4332;--q-blue:#1a3a5c;--q-amber:#7a4e00;--q-red:#7a1a1a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--text);min-height:100vh;}
+
+/* ── AUTH ── */
+.auth-wrap{min-height:100vh;background:var(--green);display:flex;align-items:center;justify-content:center;padding:20px;}
+.auth-card{background:#fff;border-radius:16px;padding:44px 40px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.auth-logo{text-align:center;margin-bottom:28px;}
+.auth-logo img{height:52px;}
+.auth-title{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--green);text-align:center;margin-bottom:4px;}
+.auth-sub{font-size:0.82rem;color:var(--text-muted);text-align:center;margin-bottom:28px;line-height:1.5;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px;}
+.field input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;color:var(--text);background:var(--cream-pale);transition:border-color 0.15s;}
+.field input:focus{outline:none;border-color:var(--green-light);background:#fff;}
+.auth-btn{width:100%;padding:13px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:background 0.15s;margin-top:6px;}
+.auth-btn:hover{background:var(--green-mid);}
+.auth-btn.google{background:#fff;color:var(--text);border:1.5px solid var(--border);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.auth-btn.google:hover{background:var(--cream-pale);}
+.google-icon{width:18px;height:18px;}
+.auth-divider{text-align:center;font-size:0.75rem;color:var(--text-muted);margin:12px 0;position:relative;}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
+.auth-divider::before{left:0;}
+.auth-divider::after{right:0;}
+.auth-err{background:#fdecea;border:1px solid #f5c6cb;color:#c0392b;padding:10px 14px;border-radius:6px;font-size:0.82rem;margin-bottom:14px;display:none;}
+.auth-msg{background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:10px 14px;border-radius:6px;font-size:0.82rem;margin-bottom:14px;display:none;}
+.auth-foot{text-align:center;font-size:0.72rem;color:var(--text-muted);margin-top:18px;}
+.app-wrap{display:none;}
+
+/* ── HEADER ── */
+.header{background:var(--green);padding:16px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold);}
+.hdr-logo img{height:48px;}
+.hdr-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--cream-light);letter-spacing:0.01em;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.hdr-user{font-size:0.78rem;color:var(--cream);opacity:0.85;}
+.signout{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:var(--cream-light);padding:5px 12px;border-radius:4px;font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
+.signout:hover{background:rgba(255,255,255,0.2);}
+
+/* ── MAIN ── */
+.main{max-width:1180px;margin:0 auto;padding:40px;}
+
+/* ── INTRO ── */
+.intro{margin-bottom:36px;}
+.intro h1{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--green);margin-bottom:10px;}
+.intro p{font-size:0.95rem;color:var(--text-muted);line-height:1.7;max-width:680px;}
+.intro .credit{font-size:0.78rem;color:var(--text-muted);margin-top:8px;font-style:italic;}
+
+/* ── LAYOUT ── */
+.tool-layout{display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start;}
+
+/* ── MATRIX ── */
+.matrix-wrap{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:28px;}
+.matrix-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.matrix-title{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);}
+
+.axis-label-top{text-align:center;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:10px;}
+.axis-wrap{display:flex;gap:0;align-items:stretch;}
+.axis-label-side{writing-mode:vertical-rl;transform:rotate(180deg);font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-right:10px;text-align:center;}
+
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;flex:1;}
+.quadrant{
+  border-radius:10px;padding:14px;min-height:190px;position:relative;cursor:default;
+  transition:box-shadow 0.2s;
+}
+.quadrant:hover{box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+
+.q-tl{background:#e8f5ee;border:2px solid #a8d8b8;}
+.q-tr{background:#d4edda;border:2px solid #74c98a;}
+.q-bl{background:#fff8e1;border:2px solid #ffd54f;}
+.q-br{background:#fdecea;border:2px solid #f5a9a9;}
+
+.q-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+.q-tr .q-badge{background:var(--q-green);color:#fff;}
+.q-tl .q-badge{background:var(--q-blue);color:#fff;}
+.q-bl .q-badge{background:var(--q-amber);color:#fff;}
+.q-br .q-badge{background:var(--q-red);color:#fff;}
+
+.q-name{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--text);margin-bottom:4px;line-height:1.3;}
+.q-action{font-size:0.75rem;font-weight:600;color:var(--text-muted);margin-bottom:10px;}
+.q-desc{font-size:0.76rem;color:var(--text-muted);line-height:1.55;margin-bottom:12px;}
+
+/* dots on quadrant */
+.q-dots{display:flex;flex-wrap:wrap;gap:6px;min-height:28px;}
+.person-dot{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,0.85);border:1.5px solid rgba(0,0,0,0.12);
+  border-radius:20px;padding:3px 9px 3px 5px;font-size:0.72rem;font-weight:600;
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;
+}
+.person-dot:hover{transform:scale(1.04);box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.dot-avatar{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.58rem;font-weight:700;color:#fff;flex-shrink:0;}
+
+/* axis arrows */
+.axis-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:0 2px;}
+.axis-arrow{font-size:0.7rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;font-weight:600;}
+.arrow-line{flex:1;height:2px;background:linear-gradient(to right,var(--border),var(--text-muted));margin:0 8px;}
+
+/* ── RIGHT PANEL ── */
+.panel-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.panel-title{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.panel-title .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+
+/* Add person form */
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:6px;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:9px 12px;border:1.5px solid var(--border);background:var(--cream-pale);
+  font-family:'Inter',sans-serif;font-size:0.84rem;color:var(--text);border-radius:8px;transition:border-color 0.15s;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--green-light);background:#fff;}
+.form-group textarea{resize:vertical;min-height:68px;line-height:1.5;}
+
+.slider-wrap{display:flex;align-items:center;gap:10px;}
+.slider-wrap input[type=range]{flex:1;accent-color:var(--green);}
+.slider-val{font-size:0.9rem;font-weight:700;color:var(--green);min-width:28px;text-align:right;}
+.slider-labels{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-muted);margin-top:3px;}
+
+.add-btn{width:100%;padding:11px;background:var(--green);color:var(--cream-light);border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:background 0.15s;}
+.add-btn:hover{background:var(--green-mid);}
+
+/* Person list */
+.person-list{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow-y:auto;}
+.person-item{
+  display:flex;align-items:flex-start;gap:10px;padding:12px;
+  border:1.5px solid var(--border);border-radius:10px;background:var(--cream-pale);
+  cursor:pointer;transition:all 0.15s;
+}
+.person-item:hover{border-color:var(--green-light);background:#fff;}
+.person-item.selected{border-color:var(--green);background:#fff;box-shadow:0 0 0 2px rgba(27,67,50,0.1);}
+.pi-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:#fff;flex-shrink:0;}
+.pi-info{flex:1;min-width:0;}
+.pi-name{font-size:0.88rem;font-weight:700;color:var(--text);}
+.pi-role{font-size:0.75rem;color:var(--text-muted);margin-top:1px;}
+.pi-q{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-top:5px;padding:2px 8px;border-radius:10px;display:inline-block;}
+.pi-actions{display:flex;gap:6px;margin-top:8px;}
+.pi-btn{font-size:0.72rem;padding:3px 9px;border-radius:4px;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;color:var(--text-muted);transition:all 0.15s;}
+.pi-btn:hover{border-color:var(--green);color:var(--green);}
+.pi-btn.danger:hover{border-color:#c0392b;color:#c0392b;}
+.pi-delete{background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;padding:2px 4px;border-radius:4px;flex-shrink:0;transition:color 0.15s;}
+.pi-delete:hover{color:#c0392b;}
+
+.empty-state{text-align:center;padding:24px 12px;color:var(--text-muted);font-size:0.84rem;line-height:1.6;}
+
+/* Detail panel */
+.detail-card{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.detail-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.detail-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;}
+.detail-name{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--text);}
+.detail-role{font-size:0.82rem;color:var(--text-muted);margin-top:2px;}
+.detail-q-badge{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:14px;}
+.detail-scores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.score-box{border:1.5px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+.score-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:4px;}
+.score-num{font-size:1.8rem;font-weight:800;color:var(--green);}
+.score-bar{height:4px;background:var(--cream-light);border-radius:2px;margin-top:6px;overflow:hidden;}
+.score-fill{height:100%;background:var(--green);border-radius:2px;transition:width 0.4s;}
+.detail-notes{font-size:0.84rem;color:var(--text);line-height:1.65;background:var(--cream-pale);border-radius:8px;padding:12px;border-left:3px solid var(--gold);}
+.detail-guidance{margin-top:16px;}
+.guidance-title{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:8px;}
+.guidance-text{font-size:0.84rem;color:var(--text);line-height:1.65;}
+.back-btn{background:none;border:none;color:var(--green-light);font-size:0.82rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;padding:0;display:flex;align-items:center;gap:4px;margin-bottom:16px;}
+.back-btn:hover{color:var(--green);}
+
+/* Summary */
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.s-box{border:1.5px solid var(--border);border-radius:10px;padding:14px;text-align:center;border-top:3px solid;}
+.s-box:nth-child(1){border-top-color:var(--q-green);}
+.s-box:nth-child(2){border-top-color:var(--q-blue);}
+.s-box:nth-child(3){border-top-color:var(--q-amber);}
+.s-box:nth-child(4){border-top-color:var(--q-red);}
+.s-num{font-size:2rem;font-weight:800;color:var(--green);}
+.s-lbl{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-top:3px;}
+
+/* Footer */
+.foot{text-align:center;font-size:0.72rem;color:var(--text-muted);padding:28px;margin-top:8px;}
+
+/* Responsive */
+@media(max-width:960px){
+  .tool-layout{grid-template-columns:1fr;}
+  .main{padding:24px 20px;}
+  .header{padding:14px 20px;}
+  .summary-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:540px){
+  .matrix-grid{grid-template-columns:1fr;}
+  .axis-label-side{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div class="auth-wrap" id="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="scaling_minds_logo.png" alt="Scaling Minds" onerror="this.style.display='none'">
+    </div>
+    <div class="auth-title">Culture + Performance Matrix</div>
+    <div class="auth-sub">Sign in to map your team and save your assessments.</div>
+    <div class="auth-err" id="auth-err"></div>
+    <div class="auth-msg" id="auth-msg"></div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="auth-email" placeholder="you@company.com">
+    </div>
+    <button class="auth-btn" onclick="sendMagicLink()">Send Magic Link</button>
+    <div class="auth-divider">or</div>
+    <button class="auth-btn google" onclick="signInGoogle()">
+      <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continue with Google
+    </button>
+    <div class="auth-foot">© Scaling Minds</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app-wrap" id="app-wrap">
+  <div class="header">
+    <div class="hdr-logo">
+      <img src="scaling_minds_logo.png" alt="Scaling Minds" onerror="this.style.display='none'">
+    </div>
+    <div class="hdr-title">Culture + Performance Matrix</div>
+    <div class="hdr-right">
+      <span class="hdr-user" id="hdr-user"></span>
+      <button class="signout" onclick="signOut()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="intro">
+      <h1>Where does each person land?</h1>
+      <p>High performers who erode trust are the most dangerous people on a team. This matrix forces the honest conversation. Rate each team member on culture fit and performance, then decide what leadership requires of you.</p>
+      <div class="credit">Framework drawn from U.S. Navy SEAL evaluation criteria, popularized by Simon Sinek.</div>
+    </div>
+
+    <!-- Summary -->
+    <div class="panel-card" style="margin-bottom:28px;">
+      <div class="panel-title"><span class="dot"></span>Team Summary</div>
+      <div class="summary-grid" id="summary-grid">
+        <div class="s-box"><div class="s-num" id="s-tr">0</div><div class="s-lbl">Mission-Ready</div></div>
+        <div class="s-box"><div class="s-num" id="s-tl">0</div><div class="s-lbl">Worth Coaching</div></div>
+        <div class="s-box"><div class="s-num" id="s-bl">0</div><div class="s-lbl">Easy Decision</div></div>
+        <div class="s-box"><div class="s-num" id="s-br">0</div><div class="s-lbl">The Toxin</div></div>
+      </div>
+    </div>
+
+    <div class="tool-layout">
+      <!-- MATRIX -->
+      <div>
+        <div class="matrix-wrap">
+          <div class="axis-label-top">← Lower Culture Fit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Higher Culture Fit →</div>
+          <div class="axis-wrap">
+            <div class="axis-label-side">↑ Higher Performance &nbsp; Lower Performance ↓</div>
+            <div class="matrix-grid">
+              <!-- Top-left: Low Culture, High Performance = Toxic -->
+              <div class="quadrant q-br" id="q-br">
+                <span class="q-badge">The Toxin</span>
+                <div class="q-name">High Performance, Low Culture</div>
+                <div class="q-action">Cut or transform — no exceptions</div>
+                <div class="q-desc">They hit their numbers but leave damage behind. Every day you keep them, you send a message to the rest of the team about what you actually value.</div>
+                <div class="q-dots" id="dots-br"></div>
+              </div>
+              <!-- Top-right: High Culture, High Performance = Mission Ready -->
+              <div class="quadrant q-tr" id="q-tr">
+                <span class="q-badge">Mission-Ready</span>
+                <div class="q-name">High Performance, High Culture</div>
+                <div class="q-action">Protect, promote, and learn from</div>
+                <div class="q-desc">These people define what the team can become. They perform and they lift others. Know who they are and act accordingly — they have options.</div>
+                <div class="q-dots" id="dots-tr"></div>
+              </div>
+              <!-- Bottom-left: Low Culture, Low Performance = Easy call -->
+              <div class="quadrant q-bl" id="q-bl">
+                <span class="q-badge">Easy Decision</span>
+                <div class="q-name">Low Performance, Low Culture</div>
+                <div class="q-action">Let go — this one is clear</div>
+                <div class="q-desc">The hard part here is usually just admitting you already know the answer. Move quickly and with care. Slow exits are a kindness to no one.</div>
+                <div class="q-dots" id="dots-bl"></div>
+              </div>
+              <!-- Bottom-right: High Culture, Low Performance = Coachable -->
+              <div class="quadrant q-tl" id="q-tl">
+                <span class="q-badge">Worth Coaching</span>
+                <div class="q-name">Low Performance, High Culture</div>
+                <div class="q-action">Invest — the foundation is there</div>
+                <div class="q-desc">They believe in what you&#39;re building and how you&#39;re building it. Performance gaps are fixable when the culture fit is real. Give them honest feedback and real support.</div>
+                <div class="q-dots" id="dots-tl"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div id="right-panel">
+        <!-- Add form -->
+        <div class="panel-card" id="add-card">
+          <div class="panel-title"><span class="dot"></span>Add Team Member</div>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="p-name" placeholder="First Last">
+          </div>
+          <div class="form-group">
+            <label>Role / Title</label>
+            <input type="text" id="p-role" placeholder="Director of Operations">
+          </div>
+          <div class="form-group">
+            <label>Culture Fit &nbsp;<span id="cf-val" style="color:var(--green);font-weight:700;">5</span> / 10</label>
+            <div class="slider-wrap">
+              <input type="range" min="1" max="10" value="5" id="p-culture" oninput="document.getElementById('cf-val').textContent=this.value;updatePreview()">
+              <span class="slider-val" id="cf-badge">—</span>
+            </div>
+            <div class="slider-labels"><span>Doesn&#39;t fit</span><span>Lives it</span></div>
+          </div>
+          <div class="form-group">
+            <label>Performance &nbsp;<span id="pf-val" style="color:var(--green);font-weight:700;">5</span> / 10</label>
+            <div class="slider-wrap">
+              <input type="range" min="1" max="10" value="5" id="p-perf" oninput="document.getElementById('pf-val').textContent=this.value;updatePreview()">
+              <span class="slider-val" id="pf-badge">—</span>
+            </div>
+            <div class="slider-labels"><span>Struggling</span><span>Exceptional</span></div>
+          </div>
+          <div class="form-group">
+            <label>Notes (optional)</label>
+            <textarea id="p-notes" placeholder="What&#39;s the honest take on this person?"></textarea>
+          </div>
+          <div id="q-preview" style="font-size:0.78rem;font-weight:700;text-align:center;padding:8px;border-radius:6px;margin-bottom:12px;display:none;"></div>
+          <button class="add-btn" onclick="addPerson()">Add to Matrix</button>
+        </div>
+
+        <!-- Person list -->
+        <div class="panel-card">
+          <div class="panel-title"><span class="dot"></span>Your Team (<span id="team-count">0</span>)</div>
+          <div id="person-list">
+            <div class="empty-state">Add your first team member to get started.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">© Scaling Minds &nbsp;·&nbsp; Culture + Performance Matrix</div>
+  </div>
+</div>
+
+<!-- DETAIL OVERLAY (lives outside main flow) -->
+<div id="detail-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:200;overflow-y:auto;padding:40px 20px;">
+  <div style="max-width:480px;margin:0 auto;" id="detail-inner"></div>
+</div>
+
+<script>
+// ── FIREBASE ──────────────────────────────────────────────────────────────────
+const fbConfig = {
+  apiKey:"AIzaSyBPHVZ0vQfaHiRV7597niC1Oewb-BBTLIA",
+  authDomain:"scalingminds-tools.firebaseapp.com",
+  projectId:"scalingminds-tools",
+  appId:"1:785541250779:web:843f9e1e68b75aa156d6fe"
+};
+firebase.initializeApp(fbConfig);
+const auth = firebase.auth();
+const db   = firebase.firestore();
+
+let currentUser = null;
+let team = [];
+let docRef = null;
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+function showErr(msg){ const e=document.getElementById('auth-err'); e.textContent=msg; e.style.display='block'; }
+function showMsg(msg){ const e=document.getElementById('auth-msg'); e.textContent=msg; e.style.display='block'; }
+
+async function sendMagicLink(){
+  const email = document.getElementById('auth-email').value.trim();
+  if(!email){ showErr('Enter your email.'); return; }
+  try{
+    await auth.sendSignInLinkToEmail(email,{url:window.location.href,handleCodeInApp:true});
+    localStorage.setItem('smEmailForSignIn', email);
+    showMsg('Magic link sent — check your inbox.');
+  }catch(e){ showErr(e.message); }
+}
+
+async function signInGoogle(){
+  try{ await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
+  catch(e){ showErr(e.message); }
+}
+
+function signOut(){ auth.signOut(); }
+
+if(auth.isSignInWithEmailLink(window.location.href)){
+  let email = localStorage.getItem('smEmailForSignIn') || prompt('Confirm your email:');
+  auth.signInWithEmailLink(email, window.location.href)
+    .then(()=>{ localStorage.removeItem('smEmailForSignIn'); window.history.replaceState({},'',window.location.pathname); })
+    .catch(e=>{ showErr(e.message); });
+}
+
+auth.onAuthStateChanged(async user=>{
+  if(user){
+    currentUser = user;
+    document.getElementById('auth-wrap').style.display='none';
+    document.getElementById('app-wrap').style.display='block';
+    document.getElementById('hdr-user').textContent = user.email || user.displayName || '';
+    await loadTeam();
+    render();
+    updatePreview();
+  } else {
+    document.getElementById('auth-wrap').style.display='flex';
+    document.getElementById('app-wrap').style.display='none';
+  }
+});
+
+// ── FIRESTORE ─────────────────────────────────────────────────────────────────
+async function loadTeam(){
+  try{
+    const q = await db.collection('culture_matrix').where('uid','==',currentUser.uid).limit(1).get();
+    if(!q.empty){
+      const snap = q.docs[0];
+      docRef = snap.ref;
+      team = snap.data().team || [];
+    } else {
+      docRef = null;
+      team = [];
+    }
+  }catch(e){ console.error(e); team=[]; }
+}
+
+async function saveTeam(){
+  try{
+    const payload = { uid:currentUser.uid, email:currentUser.email, team, updated:firebase.firestore.FieldValue.serverTimestamp() };
+    if(docRef){ await docRef.set(payload); }
+    else { const ref = await db.collection('culture_matrix').add(payload); docRef=ref; }
+  }catch(e){ console.error('Save error:',e); }
+}
+
+// ── QUADRANT LOGIC ────────────────────────────────────────────────────────────
+const QUADRANTS = {
+  'tr':{ label:'Mission-Ready',    color:'#1B4332', bg:'#d4edda' },
+  'tl':{ label:'Worth Coaching',   color:'#1a3a5c', bg:'#e8f5ee' },
+  'bl':{ label:'Easy Decision',    color:'#7a4e00', bg:'#fff8e1' },
+  'br':{ label:'The Toxin',        color:'#7a1a1a', bg:'#fdecea' }
+};
+
+const GUIDANCE = {
+  'tr': 'Protect this person. Tell them explicitly what they mean to the team. Understand what keeps them here. Give them visibility, challenge, and a path — or someone else will.',
+  'tl': 'The culture fit is real, which means the performance gap is workable. Get specific about what&#39;s not working and give them the support to fix it. Set a clear timeline and follow through.',
+  'bl': 'This one is usually clearer than it feels. Delaying the conversation doesn&#39;t help them or the team. Move with honesty and care, but move.',
+  'br': 'This is the hardest and most important call. They may be your top producer. But every day they stay, you&#39;re telling the rest of the team that results override how you treat people. They don&#39;t. Act.'
+};
+
+function getQuadrant(culture, perf){
+  const highC = culture >= 6;
+  const highP = perf >= 6;
+  if(highC && highP) return 'tr';
+  if(!highC && highP) return 'br';
+  if(highC && !highP) return 'tl';
+  return 'bl';
+}
+
+const COLORS = ['#1B4332','#B8860B','#1a3a5c','#7a4e00','#2D6A4F','#c0392b','#5a3e7a','#2c6e8a'];
+function getColor(i){ return COLORS[i % COLORS.length]; }
+function initials(name){ return name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render(){
+  // clear dots
+  ['tr','tl','bl','br'].forEach(q=>{ document.getElementById('dots-'+q).innerHTML=''; });
+
+  // place people
+  team.forEach((p,i)=>{
+    const q = getQuadrant(p.culture, p.perf);
+    const dot = document.createElement('div');
+    dot.className = 'person-dot';
+    dot.onclick = ()=>showDetail(i);
+    dot.innerHTML = `<div class="dot-avatar" style="background:${getColor(i)}">${initials(p.name)}</div>${p.name.split(' ')[0]}`;
+    document.getElementById('dots-'+q).appendChild(dot);
+  });
+
+  // summary counts
+  const counts = {tr:0,tl:0,bl:0,br:0};
+  team.forEach(p=>{ counts[getQuadrant(p.culture,p.perf)]++; });
+  document.getElementById('s-tr').textContent = counts.tr;
+  document.getElementById('s-tl').textContent = counts.tl;
+  document.getElementById('s-bl').textContent = counts.bl;
+  document.getElementById('s-br').textContent = counts.br;
+
+  // person list
+  document.getElementById('team-count').textContent = team.length;
+  const list = document.getElementById('person-list');
+  if(!team.length){
+    list.innerHTML = '<div class="empty-state">Add your first team member to get started.</div>';
+    return;
+  }
+  list.innerHTML = team.map((p,i)=>{
+    const q = getQuadrant(p.culture, p.perf);
+    const qd = QUADRANTS[q];
+    return `<div class="person-item" onclick="showDetail(${i})">
+      <div class="pi-avatar" style="background:${getColor(i)}">${initials(p.name)}</div>
+      <div class="pi-info">
+        <div class="pi-name">${p.name}</div>
+        <div class="pi-role">${p.role||'No title'}</div>
+        <div class="pi-q" style="background:${qd.bg};color:${qd.color}">${qd.label}</div>
+        <div class="pi-actions">
+          <button class="pi-btn" onclick="event.stopPropagation();editPerson(${i})">Edit</button>
+          <button class="pi-btn danger" onclick="event.stopPropagation();deletePerson(${i})">Remove</button>
+        </div>
+      </div>
+      <button class="pi-delete" onclick="event.stopPropagation();deletePerson(${i})">×</button>
+    </div>`;
+  }).join('');
+}
+
+// ── ADD/EDIT/DELETE ───────────────────────────────────────────────────────────
+let editIndex = -1;
+
+function updatePreview(){
+  const c = parseInt(document.getElementById('p-culture').value);
+  const p = parseInt(document.getElementById('p-perf').value);
+  const q = getQuadrant(c,p);
+  const qd = QUADRANTS[q];
+  const prev = document.getElementById('q-preview');
+  prev.style.display='block';
+  prev.style.background = qd.bg;
+  prev.style.color = qd.color;
+  prev.textContent = 'This person lands in: ' + qd.label;
+  document.getElementById('cf-badge').textContent = c;
+  document.getElementById('pf-badge').textContent = p;
+}
+
+function addPerson(){
+  const name = document.getElementById('p-name').value.trim();
+  if(!name){ alert('Enter a name.'); return; }
+  const person = {
+    name, role: document.getElementById('p-role').value.trim(),
+    culture: parseInt(document.getElementById('p-culture').value),
+    perf: parseInt(document.getElementById('p-perf').value),
+    notes: document.getElementById('p-notes').value.trim()
+  };
+  if(editIndex >= 0){ team[editIndex] = person; editIndex=-1; }
+  else { team.push(person); }
+  // reset form
+  document.getElementById('p-name').value='';
+  document.getElementById('p-role').value='';
+  document.getElementById('p-culture').value=5; document.getElementById('cf-val').textContent='5';
+  document.getElementById('p-perf').value=5; document.getElementById('pf-val').textContent='5';
+  document.getElementById('p-notes').value='';
+  document.getElementById('q-preview').style.display='none';
+  document.getElementById('add-card').querySelector('.panel-title').innerHTML='<span class="dot"></span>Add Team Member';
+  document.querySelector('.add-btn').textContent='Add to Matrix';
+  render();
+  saveTeam();
+}
+
+function editPerson(i){
+  const p = team[i];
+  editIndex = i;
+  document.getElementById('p-name').value = p.name;
+  document.getElementById('p-role').value = p.role||'';
+  document.getElementById('p-culture').value = p.culture; document.getElementById('cf-val').textContent=p.culture;
+  document.getElementById('p-perf').value = p.perf; document.getElementById('pf-val').textContent=p.perf;
+  document.getElementById('p-notes').value = p.notes||'';
+  document.getElementById('add-card').querySelector('.panel-title').innerHTML='<span class="dot"></span>Edit: '+p.name;
+  document.querySelector('.add-btn').textContent='Save Changes';
+  updatePreview();
+  document.getElementById('add-card').scrollIntoView({behavior:'smooth'});
+}
+
+function deletePerson(i){
+  if(!confirm('Remove '+team[i].name+' from the matrix?')) return;
+  team.splice(i,1);
+  render();
+  saveTeam();
+  closeDetail();
+}
+
+// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
+function showDetail(i){
+  const p = team[i];
+  const q = getQuadrant(p.culture, p.perf);
+  const qd = QUADRANTS[q];
+  const overlay = document.getElementById('detail-overlay');
+  const inner = document.getElementById('detail-inner');
+  inner.innerHTML = `
+    <div class="detail-card">
+      <button class="back-btn" onclick="closeDetail()">← Back to Matrix</button>
+      <div class="detail-header">
+        <div class="detail-avatar" style="background:${getColor(i)}">${initials(p.name)}</div>
+        <div>
+          <div class="detail-name">${p.name}</div>
+          <div class="detail-role">${p.role||'No title set'}</div>
+        </div>
+      </div>
+      <div class="detail-q-badge" style="background:${qd.bg};color:${qd.color}">${qd.label}</div>
+      <div class="detail-scores">
+        <div class="score-box">
+          <div class="score-lbl">Culture Fit</div>
+          <div class="score-num">${p.culture}<span style="font-size:0.9rem;font-weight:400;">/10</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:${p.culture*10}%"></div></div>
+        </div>
+        <div class="score-box">
+          <div class="score-lbl">Performance</div>
+          <div class="score-num">${p.perf}<span style="font-size:0.9rem;font-weight:400;">/10</span></div>
+          <div class="score-bar"><div class="score-fill" style="width:${p.perf*10}%"></div></div>
+        </div>
+      </div>
+      ${p.notes ? `<div class="detail-notes">${p.notes}</div>` : ''}
+      <div class="detail-guidance">
+        <div class="guidance-title">What this requires of you</div>
+        <div class="guidance-text">${GUIDANCE[q]}</div>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:10px;">
+        <button class="pi-btn" style="flex:1;padding:9px;" onclick="closeDetail();editPerson(${i})">Edit Assessment</button>
+        <button class="pi-btn danger" style="padding:9px 14px;" onclick="deletePerson(${i})">Remove</button>
+      </div>
+    </div>`;
+  overlay.style.display='block';
+  document.body.style.overflow='hidden';
+}
+
+function closeDetail(){
+  document.getElementById('detail-overlay').style.display='none';
+  document.body.style.overflow='';
+}
+
+document.getElementById('detail-overlay').addEventListener('click', function(e){
+  if(e.target === this) closeDetail();
+});
+</script>
+</body>
+</html>
