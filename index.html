@@ -341,7 +341,7 @@ body{font-family:'Inter',sans-serif;background:var(--cream-pale);color:var(--tex
             <span class="ax-lbl" style="margin-left:4px;">High Performance</span>
           </div>
           <div class="matrix-body">
-            <div class="axis-y-label">↑ High Culture &nbsp;&nbsp;&nbsp; Low Culture ↓</div>
+            <div class="axis-y-label">↓ Low Culture &nbsp;&nbsp;&nbsp; High Culture ↑</div>
             <div style="flex:1;">
               <div style="position:relative;">
               <div class="matrix-grid" id="matrix-grid">
@@ -707,12 +707,13 @@ function startAssessment(){
   const name=document.getElementById('p-name').value.trim();
   if(!name){alert('Enter a name first.');return;}
   MS={personIndex:-1,name,role:document.getElementById('p-role').value.trim(),
-      notes:document.getElementById('p-notes').value.trim(),step:0,answers:Array(10).fill(null)};
+      notes:document.getElementById('p-notes').value.trim(),step:0,answers:Array(10).fill(null),
+      gutCulture:null,gutPerf:null};
   openModal();
 }
 function reAssess(i){
   const p=team[i];
-  MS={personIndex:i,name:p.name,role:p.role||'',notes:p.notes||'',step:0,answers:Array(10).fill(null)};
+  MS={personIndex:i,name:p.name,role:p.role||'',notes:p.notes||'',step:0,answers:Array(10).fill(null),gutCulture:null,gutPerf:null};
   openModal();
 }
 function openModal(){
@@ -811,25 +812,118 @@ function renderScoreReveal(){
   h+=`</div></div>`;
   h+=`<div class="modal-nav" style="margin-top:20px;">`;
   h+=`<button class="nav-back" onclick="MS.step=9;renderStep()">← Review</button>`;
-  h+=`<button class="nav-next" onclick="showQuadrantReveal(${cAxis},${pAxis})">See Where They Land →</button>`;
+  // Check if either score lands in the boundary zone (5-6) — if so, show tie-breaker first
+  const needsTieBreaker=(cAxis>=5&&cAxis<=6)||(pAxis>=5&&pAxis<=6);
+  if(needsTieBreaker){
+    h+=`<button class="nav-next" onclick="showTieBreaker(${cAxis},${pAxis})">Next →</button>`;
+  } else {
+    h+=`<button class="nav-next" onclick="showQuadrantReveal(${cAxis},${pAxis},null)">See Where They Land →</button>`;
+  }
   h+=`</div>`;
 
   document.getElementById('modal-body').innerHTML=h;
 }
 
+// Stage 1.5: tie-breaker — only shows when score is 5 or 6 on either axis
+function showTieBreaker(cAxis, pAxis){
+  const cBoundary = cAxis>=5&&cAxis<=6;
+  const pBoundary = pAxis>=5&&pAxis<=6;
+
+  let h='';
+  h+=`<div style="margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid var(--cream-light);">`;
+  h+=`<div style="font-size:0.63rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:4px;">Boundary Check</div>`;
+  h+=`<div style="font-family:'DM Serif Display',serif;font-size:0.96rem;color:var(--text);">`;
+  if(cBoundary&&pBoundary) h+=`Culture and performance both land near the midpoint.`;
+  else if(cBoundary) h+=`Culture fit lands near the midpoint.`;
+  else h+=`Performance lands near the midpoint.`;
+  h+=`</div></div>`;
+
+  if(cBoundary){
+    h+=`<div class="q-text" style="margin-bottom:6px;">On culture fit — is this person trending better or worse over time?</div>`;
+    h+=`<div class="q-sub" style="margin-bottom:16px;">Your gut read, not a precise answer.</div>`;
+    h+=`<div style="display:flex;gap:8px;margin-bottom:${pBoundary?'20px':'18px'};">`;
+    h+=`<div class="r-btn${MS.gutCulture==='better'?' sel':''}" onclick="MS.gutCulture='better';renderTieButtons()" style="flex:1;padding:14px 8px;">`;
+    h+=`<span class="r-num" style="font-size:0.9rem;">↑</span><span class="r-word">Trending Better</span></div>`;
+    h+=`<div class="r-btn${MS.gutCulture==='worse'?' sel':''}" onclick="MS.gutCulture='worse';renderTieButtons()" style="flex:1;padding:14px 8px;">`;
+    h+=`<span class="r-num" style="font-size:0.9rem;">↓</span><span class="r-word">Trending Worse</span></div>`;
+    h+=`<div class="r-btn${MS.gutCulture==='steady'?' sel':''}" onclick="MS.gutCulture='steady';renderTieButtons()" style="flex:1;padding:14px 8px;">`;
+    h+=`<span class="r-num" style="font-size:0.9rem;">→</span><span class="r-word">About the Same</span></div>`;
+    h+=`</div>`;
+  }
+
+  if(pBoundary){
+    h+=`<div class="q-text" style="margin-bottom:6px;">On performance — is this person trending better or worse over time?</div>`;
+    h+=`<div class="q-sub" style="margin-bottom:16px;">Your gut read, not a precise answer.</div>`;
+    h+=`<div style="display:flex;gap:8px;margin-bottom:18px;">`;
+    h+=`<div class="r-btn${MS.gutPerf==='better'?' sel':''}" onclick="MS.gutPerf='better';renderTieButtons()" style="flex:1;padding:14px 8px;">`;
+    h+=`<span class="r-num" style="font-size:0.9rem;">↑</span><span class="r-word">Trending Better</span></div>`;
+    h+=`<div class="r-btn${MS.gutPerf==='worse'?' sel':''}" onclick="MS.gutPerf='worse';renderTieButtons()" style="flex:1;padding:14px 8px;">`;
+    h+=`<span class="r-num" style="font-size:0.9rem;">↓</span><span class="r-word">Trending Worse</span></div>`;
+    h+=`<div class="r-btn${MS.gutPerf==='steady'?' sel':''}" onclick="MS.gutPerf='steady';renderTieButtons()" style="flex:1;padding:14px 8px;">`;
+    h+=`<span class="r-num" style="font-size:0.9rem;">→</span><span class="r-word">About the Same</span></div>`;
+    h+=`</div>`;
+  }
+
+  const cReady = !cBoundary || MS.gutCulture;
+  const pReady = !pBoundary || MS.gutPerf;
+  const ready = cReady && pReady;
+
+  h+=`<div class="modal-nav" id="tie-nav">`;
+  h+=`<button class="nav-back" onclick="renderScoreReveal()">← Scores</button>`;
+  h+=`<button class="nav-next" id="tie-next" onclick="showQuadrantReveal(${cAxis},${pAxis},buildGutNote())" ${ready?'':'disabled'}>See Where They Land →</button>`;
+  h+=`</div>`;
+
+  document.getElementById('modal-body').innerHTML=h;
+}
+
+function renderTieButtons(){
+  // Re-render just the nav button state without full redraw
+  const btn=document.getElementById('tie-next');
+  if(!btn) return;
+  // Check both guts answered
+  const body=document.getElementById('modal-body').innerHTML;
+  const cDone = body.includes('gutCulture') ? !!MS.gutCulture : true;
+  const pDone = body.includes('gutPerf') ? !!MS.gutPerf : true;
+  // Simpler: just re-call showTieBreaker to re-render with updated state
+  const match = btn.getAttribute('onclick').match(/showQuadrantReveal\((\d+),(\d+)/);
+  if(match){ showTieBreaker(parseInt(match[1]),parseInt(match[2])); }
+}
+
+function buildGutNote(){
+  const parts=[];
+  if(MS.gutCulture) parts.push('Culture: trending '+MS.gutCulture);
+  if(MS.gutPerf) parts.push('Performance: trending '+MS.gutPerf);
+  return parts.length ? '"'+parts.join(' · ')+'"' : 'null';
+}
+
 // Stage 2: quadrant reveal with label, guidance, save
-function showQuadrantReveal(cAxis, pAxis){
+function showQuadrantReveal(cAxis, pAxis, gutNote){
   const q=getQ(cAxis,pAxis);
   const qd=QDEFS[q];
+
+  // Gut note coaching prompt — only show if there's a trending-worse signal
+  const gutStr = (typeof gutNote === 'string') ? gutNote : (gutNote||'');
+  const showCoach = gutStr.includes('worse');
+  const coachDim = gutStr.includes('Culture: trending worse') && gutStr.includes('Performance: trending worse')
+    ? 'culture fit and performance' : gutStr.includes('Culture: trending worse')
+    ? 'culture fit' : 'performance';
 
   let h=`<div class="result-quadrant">`;
   h+=`<div class="rq-badge" style="background:${qd.color}">${qd.label}</div>`;
   h+=`<div class="rq-name">${MS.name}</div>`;
   h+=`<div class="rq-guidance">${GUIDANCE[q]}</div>`;
+  if(showCoach){
+    h+=`<div style="margin-top:12px;background:rgba(184,134,11,0.12);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 14px;font-size:0.82rem;color:var(--text);line-height:1.6;">`;
+    h+=`<strong style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:4px;color:var(--gold);">Coaching note</strong>`;
+    h+=`Your gut says their ${coachDim} is trending worse. That&#39;s worth naming in your next conversation with them — or with yourself about them.`;
+    h+=`</div>`;
+  } else if(gutStr && gutStr !== 'null'){
+    h+=`<div style="margin-top:10px;font-size:0.76rem;color:var(--text-muted);font-style:italic;">${gutStr.replace(/"/g,'')}</div>`;
+  }
   h+=`</div>`;
   h+=`<div class="modal-nav" style="margin-top:20px;">`;
   h+=`<button class="nav-back" onclick="renderScoreReveal()">← Scores</button>`;
-  h+=`<button class="nav-next" onclick="saveFromModal(${cAxis},${pAxis})">Save to Matrix →</button>`;
+  h+=`<button class="nav-next" onclick="saveFromModal(${cAxis},${pAxis},${JSON.stringify(gutStr||null)})">Save to Matrix →</button>`;
   h+=`</div>`;
 
   document.getElementById('modal-body').innerHTML=h;
@@ -853,12 +947,13 @@ function goBack(){
   if(MS.step>0){MS.step--;renderStep();}
 }
 
-function saveFromModal(cAxis,pAxis){
+function saveFromModal(cAxis,pAxis,gutNote){
   const person={
     name:MS.name,role:MS.role,notes:MS.notes,
     culture:cAxis,perf:pAxis,
     cScores:MS.answers.slice(0,5),
-    pScores:MS.answers.slice(5,10)
+    pScores:MS.answers.slice(5,10),
+    gutNote:gutNote||null
   };
   if(MS.personIndex>=0){team[MS.personIndex]=person;}
   else{team.push(person);}
@@ -882,6 +977,17 @@ function showDetail(i){
   if(p.notes) h+=`<div class="detail-notes">${p.notes}</div>`;
   h+=`<div class="guidance-lbl">What this requires of you</div>`;
   h+=`<div class="guidance-txt">${GUIDANCE[q]}</div>`;
+  if(p.gutNote&&p.gutNote!=='null'){
+    const worse=p.gutNote.includes('worse');
+    const coachDim=p.gutNote.includes('Culture: trending worse')&&p.gutNote.includes('Performance: trending worse')?'culture fit and performance':p.gutNote.includes('Culture: trending worse')?'culture fit':'performance';
+    if(worse){
+      h+=`<div style="margin-top:10px;background:rgba(184,134,11,0.12);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:10px 13px;font-size:0.81rem;color:var(--text);line-height:1.6;">`;
+      h+=`<strong style="font-size:0.67rem;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:3px;color:var(--gold);">Coaching note</strong>`;
+      h+=`Your gut flagged their ${coachDim} as trending worse. Worth naming directly.</div>`;
+    } else {
+      h+=`<div style="margin-top:8px;font-size:0.75rem;color:var(--text-muted);font-style:italic;">${p.gutNote.replace(/"/g,'')}</div>`;
+    }
+  }
 
   if((p.cScores||[]).length===5&&(p.pScores||[]).length===5){
     h+=`<div class="q-breakdown">`;
