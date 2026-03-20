@@ -799,6 +799,8 @@ function renderScoreReveal(){
   const pScores=MS.answers.slice(5,10);
   const cAxis=avgToAxis(cScores);
   const pAxis=avgToAxis(pScores);
+  // Store on MS so all subsequent buttons need zero arguments
+  MS.tbCAxis=cAxis; MS.tbPAxis=pAxis;
 
   let h=`<div class="result-scores">`;
   h+=`<div class="rs-name">${MS.name}</div>`;
@@ -815,9 +817,9 @@ function renderScoreReveal(){
   // Check if either score lands in the boundary zone (5-6) — if so, show tie-breaker first
   const needsTieBreaker=(cAxis>=5&&cAxis<=6)||(pAxis>=5&&pAxis<=6);
   if(needsTieBreaker){
-    h+=`<button class="nav-next" onclick="showTieBreaker(${cAxis},${pAxis})">Next →</button>`;
+    h+=`<button class="nav-next" onclick="proceedToTieBreaker()">Next →</button>`;
   } else {
-    h+=`<button class="nav-next" onclick="showQuadrantReveal(${cAxis},${pAxis},null)">See Where They Land →</button>`;
+    h+=`<button class="nav-next" onclick="proceedToQuadrant()">See Where They Land →</button>`;
   }
   h+=`</div>`;
 
@@ -871,7 +873,7 @@ function showTieBreaker(cAxis, pAxis){
 
   h+=`<div class="modal-nav" id="tie-nav">`;
   h+=`<button class="nav-back" onclick="renderScoreReveal()">← Scores</button>`;
-  h+=`<button class="nav-next" id="tie-next" onclick="showQuadrantReveal(${cAxis},${pAxis},buildGutNote())" ${ready?'':'disabled'}>See Where They Land →</button>`;
+  h+=`<button class="nav-next" id="tie-next" onclick="proceedFromTieBreaker()" ${ready?'':'disabled'}>See Where They Land →</button>`;
   h+=`</div>`;
 
   document.getElementById('modal-body').innerHTML=h;
@@ -885,15 +887,27 @@ function buildGutNote(){
   const parts=[];
   if(MS.gutCulture) parts.push('Culture: trending '+MS.gutCulture);
   if(MS.gutPerf) parts.push('Performance: trending '+MS.gutPerf);
-  return parts.length ? '"'+parts.join(' · ')+'"' : 'null';
+  return parts.length ? parts.join(' · ') : null;
+}
+
+function proceedFromTieBreaker(){
+  showQuadrantReveal(MS.tbCAxis, MS.tbPAxis, buildGutNote());
+}
+function proceedToTieBreaker(){
+  showTieBreaker(MS.tbCAxis, MS.tbPAxis);
+}
+function proceedToQuadrant(){
+  showQuadrantReveal(MS.tbCAxis, MS.tbPAxis, null);
 }
 
 // Stage 2: quadrant reveal with label, guidance, save
 function showQuadrantReveal(cAxis, pAxis, gutNote){
+  // Store on MS so save button needs zero arguments
+  MS.tbCAxis=cAxis; MS.tbPAxis=pAxis;
+
   const q=getQ(cAxis,pAxis);
   const qd=QDEFS[q];
 
-  // Gut note coaching prompt — only show if there's a trending-worse signal
   const gutStr = (typeof gutNote === 'string') ? gutNote : (gutNote||'');
   const showCoach = gutStr.includes('worse');
   const coachDim = gutStr.includes('Culture: trending worse') && gutStr.includes('Performance: trending worse')
@@ -915,7 +929,7 @@ function showQuadrantReveal(cAxis, pAxis, gutNote){
   h+=`</div>`;
   h+=`<div class="modal-nav" style="margin-top:20px;">`;
   h+=`<button class="nav-back" onclick="renderScoreReveal()">← Scores</button>`;
-  h+=`<button class="nav-next" onclick="saveFromModal(${cAxis},${pAxis},${JSON.stringify(gutStr||null)})">Save to Matrix →</button>`;
+  h+=`<button class="nav-next" onclick="saveFromModal()">Save to Matrix →</button>`;
   h+=`</div>`;
 
   document.getElementById('modal-body').innerHTML=h;
@@ -939,17 +953,20 @@ function goBack(){
   if(MS.step>0){MS.step--;renderStep();}
 }
 
-function saveFromModal(cAxis,pAxis,gutNote){
+function saveFromModal(){
+  const cAxis = MS.tbCAxis;
+  const pAxis = MS.tbPAxis;
+  const gutNote = buildGutNote();
   const person={
-    name:MS.name,role:MS.role,notes:MS.notes,
-    culture:cAxis,perf:pAxis,
+    name:MS.name, role:MS.role, notes:MS.notes,
+    culture:cAxis, perf:pAxis,
     cScores:MS.answers.slice(0,5),
     pScores:MS.answers.slice(5,10),
-    gutNote:gutNote||null
+    gutNote: gutNote==='null' ? null : gutNote.replace(/"/g,'')
   };
-  if(MS.personIndex>=0){team[MS.personIndex]=person;}
-  else{team.push(person);}
-  closeModal();render();saveTeam();
+  if(MS.personIndex>=0){ team[MS.personIndex]=person; }
+  else{ team.push(person); }
+  closeModal(); render(); saveTeam();
 }
 
 // ── DETAIL VIEW ───────────────────────────────────────────────────────────────
